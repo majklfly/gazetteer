@@ -1,0 +1,8 @@
+.contentRow {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    font-family: 'Montserrat', sans-serif;
+    color: whitesmoke;
+    justify-content: space-evenly;
+}
