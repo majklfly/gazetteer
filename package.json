@@ -7,7 +7,7 @@
     },
     "main": "index.js",
     "scripts": {
-        "build": "webpack --mode production --config ./webpack.prod.config.js",
+        "build": "webpack",
         "start": "webpack serve"
     },
     "author": "Michal Mucha",
