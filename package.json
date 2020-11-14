@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build": "webpack",
-        "start:dev": "webpack serve"
+        "start": "webpack serve"
     },
     "author": "Michal Mucha",
     "license": "ISC",
