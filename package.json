@@ -4,9 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "webpack",
-        "start": "webpack serve",
-        "postinstall": "webpack -p --config ./webpack.prod.config.js --progress"
+        "build": "webpack --mode production --config ./webpack.prod.config.js",
+        "start": "webpack serve"
     },
     "author": "Michal Mucha",
     "license": "ISC",
