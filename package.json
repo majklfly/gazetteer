@@ -5,8 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build": "webpack",
-        "start": "webpack serve",
-        "heroku-postbuild": "webpack --config webpack.prod.js"
+        "start": "webpack serve"
     },
     "author": "Michal Mucha",
     "license": "ISC",
