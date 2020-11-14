@@ -16,7 +16,7 @@ const getCountryDetails = () => {
             let languages = "";
             data.languages.map(
                 (language) =>
-                (languages += `Code: ${language.iso639_2}, Name: ${language.name}, Native Name: ${language.nativeName}`)
+                (languages += `code: ${language.iso639_2}, name: ${language.name}, native name: ${language.nativeName} </br>`)
             );
 
             document.getElementById("continent").innerHTML = data.region;

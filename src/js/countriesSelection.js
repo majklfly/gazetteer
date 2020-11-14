@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { leafletmap } from "./leaflet";
+import { leafletmap, loading } from "./leaflet";
 
 // fetch data from countries api and append the code and name to the select option
 export const countriesSelection = $.ajax({
@@ -20,6 +20,7 @@ export const countriesSelection = $.ajax({
 
 // updated localstorage based on new fetch
 $("#searchInput").on("keypress", function(e) {
+    loading = true;
     const currentValue = $("#searchInput").val();
     const countryCode = localStorage.setItem("countryCode", currentValue);
 

@@ -3,9 +3,16 @@ import $ from "jquery";
 
 let latitude;
 let longitude;
+export let loading;
+
+loading
+    ?
+    $("#loadingAnimation").css("visibility", "visible") :
+    $("#loadingAnimation").css("visibility", "hidden");
 
 // fetch data about current location
 export const fetchCurrentLocation = () => {
+    loading = true;
     $.ajax({
         url: "https://api.ipgeolocation.io/ipgeo?apiKey=" + process.env.GEO_API_KEY,
         type: "GET",
@@ -16,6 +23,7 @@ export const fetchCurrentLocation = () => {
             const countryCode = result.country_code2;
             localStorage.setItem("countryCode", countryCode);
             localStorage.setItem("countryName", result.country_name);
+            leafletmap();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
@@ -58,4 +66,6 @@ export const leafletmap = () => {
     L.marker([latitude, longitude], { icon: greenIcon })
         .addTo(map)
         .bindPopup(popup);
+
+    loading = false;
 };
