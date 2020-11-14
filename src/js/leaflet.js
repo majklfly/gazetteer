@@ -1,25 +1,20 @@
-var $ = require("jquery");
-var L = require("leaflet");
+import L from "leaflet";
+import $ from "jquery";
 
 let latitude;
 let longitude;
-let countryCode;
-console.log("variables", process.env);
-
-// content of the popup manipulated by jquery
-const popupContent =
-    "<iframe src='libs/html/popupContent.html' style='border:none' width='100%' height='100%'></iframe>";
 
 // calls API based on user's IP and returns location
-const leafletmap = $.ajax({
-    url: "https://api.ipgeolocation.io/ipgeo?apiKey=" + process.env.GEO_API_KEI,
+export const leafletmap = $.ajax({
+    url: "https://api.ipgeolocation.io/ipgeo?apiKey=" + process.env.GEO_API_KEY,
     type: "GET",
     dataType: "json",
     success: function(result) {
         latitude = parseFloat(result.latitude);
         longitude = parseFloat(result.longitude);
-        countryCode = result.country_code2;
+        const countryCode = result.country_code2;
         localStorage.setItem("countryCode", countryCode);
+
         var map = L.map("mapid").setView([latitude, longitude], 7);
         L.tileLayer(
             "https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}", {
@@ -29,9 +24,13 @@ const leafletmap = $.ajax({
                 ext: "jpg",
             }
         ).addTo(map);
+
         var popup = L.popup()
             .setLatLng([latitude, longitude])
-            .setContent(popupContent);
+            .setContent(
+                "<object id='iframePopup' data='src/html/popupContent.html' style='border:none' width='100%' height='100%'></object>"
+            );
+
         var greenIcon = L.icon({
             iconUrl: "src/img/leaf-green.png",
             shadowUrl: "src/img/leaf-shadow.png",
@@ -51,5 +50,3 @@ const leafletmap = $.ajax({
         console.log(errorThrown);
     },
 });
-
-module.exports = leafletmap;
