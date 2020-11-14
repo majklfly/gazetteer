@@ -6,7 +6,7 @@
     "scripts": {
         "build": "webpack",
         "start": "webpack serve",
-        "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress"
+        "heroku-postbuild": "webpack --config webpack.prod.js"
     },
     "author": "Michal Mucha",
     "license": "ISC",
