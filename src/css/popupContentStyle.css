@@ -1,8 +1,21 @@
 .contentRow {
     display: flex;
-    flex-direction: row;
-    width: 50%;
+    flex-direction: column;
+    width: 100%;
     font-family: 'Montserrat', sans-serif;
     color: whitesmoke;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+}
+
+#flag {
+    height: 10%;
+    width: 16%;
+    position: absolute;
+    right: 8%;
+    top: 8%;
+}
+
+.popuplabel {
+    text-decoration: underline;
+    font-size: 0.8rem;
 }
