@@ -1,5 +1,6 @@
 import L from "leaflet";
 import $ from "jquery";
+import { retrieveWeatherData } from "./weather";
 
 let latitude;
 let longitude;
@@ -24,6 +25,7 @@ export const fetchCurrentLocation = () => {
             localStorage.setItem("countryCode", countryCode);
             localStorage.setItem("countryName", result.country_name);
             leafletmap();
+            retrieveWeatherData();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);

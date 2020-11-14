@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { contriesSelection } from "./js/countriesSelection";
 import { fetchCurrentLocation, leafletmap } from "./js/leaflet";
-import "./js/weather";
+import { retrieveWeatherData } from "./js/weather";
 
 const title = localStorage.getItem("countryName");
 
@@ -13,8 +13,10 @@ if (title && title.length > 30) {
 
 const latitude = localStorage.getItem("latitude");
 
+//decides between first render or already search followed by sequence of calls
 if (!latitude) {
     fetchCurrentLocation();
 } else {
     leafletmap();
+    retrieveWeatherData();
 }
