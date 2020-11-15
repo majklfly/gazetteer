@@ -5,6 +5,9 @@ const dotenv = require("dotenv");
 const port = process.env.PORT;
 
 module.exports = (env) => {
+    console.log("NODE_ENV: ", env.NODE_ENV); // 'local'
+    console.log("Production: ", env.production); // true
+
     return {
         devServer: {
             port: port,
