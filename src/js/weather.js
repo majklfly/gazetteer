@@ -3,6 +3,8 @@ import Config from "Config";
 
 // make ajax call to weather API and injects data with jquery to html document
 
+console.log("process", process.env);
+
 export const retrieveWeatherData = async() => {
     const latitude = await localStorage.getItem("latitude");
     const longitude = await localStorage.getItem("longitude");
