@@ -1,6 +1,7 @@
 import L from "leaflet";
 import $ from "jquery";
 import { retrieveWeatherData } from "./weather";
+import { covidFetch } from "./covid";
 
 let latitude;
 let longitude;
@@ -24,8 +25,14 @@ export const fetchCurrentLocation = () => {
             const countryCode = result.country_code2;
             localStorage.setItem("countryCode", countryCode);
             localStorage.setItem("countryName", result.country_name);
+            const title = localStorage.getItem("countryName");
+            document.getElementById("countryTitle").innerHTML = title;
+            if (title && title.length > 30) {
+                $("#countryTitle").css("font-size", "1.8vw");
+            }
             leafletmap();
             retrieveWeatherData();
+            covidFetch();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);

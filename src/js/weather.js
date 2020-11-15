@@ -19,7 +19,6 @@ export const retrieveWeatherData = async() => {
             type: "GET",
             dataType: "json",
             success: function(result) {
-                console.log(result);
                 $("#weatherTitle").html(result.current.condition.text);
                 $("#wind").html("Wind: " + result.current.wind_kph + "km/h");
                 $("#temp").html("Temp: " + result.current.temp_c + "°C");

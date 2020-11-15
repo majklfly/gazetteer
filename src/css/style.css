@@ -32,7 +32,7 @@ body {
 #mapid {
     height: 50vw;
     width: 80vw;
-    max-width: 1400px;
+    max-width: 1000px;
     max-height: 700px;
     margin-left: 50%;
     transform: translateX(-50%);
@@ -48,9 +48,7 @@ body {
 }
 
 .leaflet-popup-close-button {
-    margin-right: 2vw;
-    margin-top: 2vw;
-    size: 2rem;
+    display: none;
 }
 
 .leaflet-popup-content {
@@ -63,7 +61,7 @@ body {
     position: absolute;
     left: 10vw;
     top: 5vh;
-    font-size: 3vw;
+    font-size: clamp(25px, 4vw, 50px);
     font-family: 'Acme', sans-serif;
 }
 
@@ -71,17 +69,18 @@ body {
     border: 3px solid darkgray;
     border-radius: 10px;
     margin-top: 1%;
-    margin-left: 10vw;
-    width: 40%;
-    max-width: 500px;
+    width: 45%;
+    min-width: 300px;
+    max-width: 400px;
+    min-height: 250px;
     font-family: 'Montserrat', sans-serif;
     background-color: #968a86;
+    position: relative;
 }
 
 #weatherTitle {
-    padding-top: 5%;
-    font-weight: 900;
-    font-size: 3vw;
+    padding-top: 10%;
+    font-size: clamp(10px, 4vw, 30px);
 }
 
 #weatherContainer>div {
@@ -95,6 +94,58 @@ body {
     font-weight: 800;
     display: flex;
     justify-content: space-evenly;
-    width: 80%;
-    font-size: 2vw;
+    position: absolute;
+    bottom: 20%;
+    width: 100%;
+    font-size: clamp(5px, 3vw, 25px);
+}
+
+#weatherPicture {
+    height: 40%;
+    width: 20%;
+    position: absolute;
+    right: 10%;
+    top: 10%;
+}
+
+#coronaContainer {
+    border: 3px solid darkgray;
+    border-radius: 10px;
+    margin-top: 1%;
+    width: 45%;
+    min-width: 300px;
+    max-width: 400px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #968a86;
+    text-align: center;
+    padding: 1.5%;
+}
+
+#coronaContainer>h2 {
+    font-size: clamp(10px, 4vw, 30px);
+    padding-top: 5px;
+}
+
+#modulesSection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 80vw;
+    max-width: 1000px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+#galleryContainer {
+    border: 3px solid darkgray;
+    border-radius: 10px;
+    margin-top: 1%;
+    width: 100%;
+    height: 300px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #968a86;
+}
+
+.carouselPicture {
+    width: 45%;
 }
