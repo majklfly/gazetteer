@@ -6,7 +6,7 @@
     "scripts": {
         "heroku-postbuild": "npm install --dev",
         "build": "webpack --mode production --config ./webpack.config.js",
-        "start": "webpack serve --port 5000"
+        "start": "webpack serve --port 3000"
     },
     "author": "Michal Mucha",
     "license": "ISC",
