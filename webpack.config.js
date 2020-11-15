@@ -4,47 +4,49 @@ const dotenv = require("dotenv");
 
 const port = process.env.PORT;
 
-module.exports = {
-    devServer: {
-        port: port,
-        compress: true,
-        disableHostCheck: true,
-    },
-    module: {
-        rules: [{
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
+module.exports = (env) => {
+    return {
+        devServer: {
+            port: port,
+            compress: true,
+            disableHostCheck: true,
+        },
+        module: {
+            rules: [{
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    use: {
+                        loader: "babel-loader",
+                    },
                 },
-            },
-            {
-                test: /\.html$/,
-                use: [{
-                    loader: "html-loader",
-                    options: { minimize: true },
-                }, ],
-            },
-            {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: ["file-loader"],
-            },
-            {
-                test: /\.php$/,
-                use: {
-                    loader: "php-loader",
+                {
+                    test: /\.html$/,
+                    use: [{
+                        loader: "html-loader",
+                        options: { minimize: true },
+                    }, ],
                 },
-            },
+                {
+                    test: /\.(png|svg|jpg|gif)$/,
+                    use: ["file-loader"],
+                },
+                {
+                    test: /\.php$/,
+                    use: {
+                        loader: "php-loader",
+                    },
+                },
+            ],
+        },
+        plugins: [
+            new HtmlWebPackPlugin({
+                template: "./index.html",
+                filename: "./index.html",
+            }),
+            new webpack.DefinePlugin({
+                "process.env": JSON.stringify(dotenv.config().parsed), // it will automatically pick up key values from .env file
+            }),
         ],
-    },
-    plugins: [
-        new HtmlWebPackPlugin({
-            template: "./index.html",
-            filename: "./index.html",
-        }),
-        new webpack.DefinePlugin({
-            "process.env": JSON.stringify(dotenv.config().parsed), // it will automatically pick up key values from .env file
-        }),
-    ],
-    mode: "development",
+        mode: "development",
+    };
 };
