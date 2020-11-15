@@ -2,7 +2,12 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 
+const port = process.env.PORT;
+
 module.exports = {
+    devServer: {
+        port: port,
+    },
     module: {
         rules: [{
                 test: /\.js$/,
