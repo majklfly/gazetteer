@@ -1,4 +1,5 @@
 import $ from "jquery";
+import Config from "Config";
 
 // make ajax call to weather API and injects data with jquery to html document
 
@@ -11,7 +12,7 @@ export const retrieveWeatherData = async() => {
     if (latitude && longitude) {
         $.ajax({
             url: "https://api.weatherapi.com/v1/current.json?key=" +
-                process.env.WEATHER_API_KEY +
+                Config.WEATHER_API_KEY +
                 "&q=" +
                 latitude +
                 "," +
