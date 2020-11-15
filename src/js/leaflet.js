@@ -16,7 +16,7 @@ loading
 export const fetchCurrentLocation = () => {
     loading = true;
     $.ajax({
-        url: "https://api.ipgeolocation.io/ipgeo?apiKey=" + process.env.GEO_API_KEY,
+        url: "https://api.ipgeolocation.io/ipgeo?apiKey=" + GEO_API_KEY,
         type: "GET",
         dataType: "json",
         success: function(result) {
