@@ -6,7 +6,8 @@
     "scripts": {
         "heroku-postbuild": "npm install --dev",
         "build": "webpack --mode production development --config ./webpack.config.js",
-        "start": "webpack serve --host 0.0.0.0"
+        "start": "webpack serve --host 0.0.0.0",
+        "dev": "webpack serve"
     },
     "author": "Michal Mucha",
     "license": "ISC",
