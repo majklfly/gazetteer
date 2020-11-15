@@ -46,10 +46,5 @@ module.exports = {
             "process.env": JSON.stringify(dotenv.config().parsed), // it will automatically pick up key values from .env file
         }),
     ],
-    externals: {
-        Config: JSON.stringify({
-            API_KEY: process.env.WEATHER_API_KEY,
-            APP_URL: process.env.GEO_API_KEY,
-        }),
-    },
+    mode: "development",
 };
