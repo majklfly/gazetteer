@@ -5,8 +5,8 @@
     "main": "index.js",
     "scripts": {
         "heroku-postbuild": "npm install --dev",
-        "build": "webpack --mode development --config ./webpack.config.js",
-        "start": "webpack serve --port 3000"
+        "build": "webpack --mode production development --config ./webpack.config.js",
+        "start": "webpack serve --config ./webpack.config.js"
     },
     "author": "Michal Mucha",
     "license": "ISC",
