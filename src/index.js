@@ -3,9 +3,6 @@ import { contriesSelection } from "./js/countriesSelection";
 import { fetchCurrentLocation, leafletmap } from "./js/leaflet";
 import { retrieveWeatherData } from "./js/weather";
 import { covidFetch } from "./js/covid";
-import { fetchDataForGallery } from "./js/photoGallery";
-
-// fetchDataForGallery();
 
 const latitude = localStorage.getItem("latitude");
 
