@@ -5,9 +5,6 @@ const dotenv = require("dotenv");
 const port = process.env.PORT;
 
 module.exports = (env) => {
-    console.log("NODE_ENV: ", env.NODE_ENV); // 'local'
-    console.log("Production: ", env.production); // true
-
     return {
         devServer: {
             port: port,
@@ -47,7 +44,9 @@ module.exports = (env) => {
                 filename: "./index.html",
             }),
             new webpack.DefinePlugin({
-                "process.env": JSON.stringify(dotenv.config().parsed), // it will automatically pick up key values from .env file
+                "process.env": JSON.stringify(dotenv.config().parsed),
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                WEATHER_API_KEY: JSON.stringify(process.env.WEATHER_API_KEY),
             }),
         ],
         mode: "development",
