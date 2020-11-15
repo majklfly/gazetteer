@@ -7,6 +7,8 @@ const port = process.env.PORT;
 module.exports = {
     devServer: {
         port: port,
+        compress: true,
+        disableHostCheck: true,
     },
     module: {
         rules: [{
