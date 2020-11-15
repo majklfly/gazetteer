@@ -4,9 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "webpack --mode production --config ./webpack.config.js",
         "heroku-prebuild": "npm install --dev",
-        "start": "webpack-dev-server"
+        "build": "webpack --mode production --config ./webpack.config.js",
+        "start": "webpack serve"
     },
     "author": "Michal Mucha",
     "license": "ISC",
