@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    "engines": {
+        "node": "12.13.1"
+    },
     "scripts": {
         "heroku-postbuild": "npm install --dev",
         "build": "webpack --mode development --config ./webpack.config.js",
