@@ -2,18 +2,18 @@ import Unsplash, { toJson } from "unsplash-js";
 import $ from "jquery";
 import "lightgallery.js";
 
-const unsplash = new Unsplash({
-    accessKey: process.env.UNSPLASH_ACCESS_KEY,
-});
+// const unsplash = new Unsplash({
+//     accessKey: process.env.UNSPLASH_ACCESS_KEY,
+// });
 
-console.log("runned");
+// console.log("runned");
 
-$(document).ready(function() {
-    $("#lightgallery").lightGallery({
-        showThumbByDefault: true,
-        addClass: "showThumbByDefault",
-    });
-});
+// $(document).ready(function() {
+//     $("#lightgallery").lightGallery({
+//         showThumbByDefault: true,
+//         addClass: "showThumbByDefault",
+//     });
+// });
 
 export const fetchDataForGallery = () => {
     unsplash.search
