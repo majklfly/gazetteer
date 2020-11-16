@@ -136,16 +136,18 @@ body {
     transform: translateX(-50%);
 }
 
-#galleryContainer {
-    border: 3px solid darkgray;
-    border-radius: 10px;
-    margin-top: 1%;
-    width: 100%;
-    height: 300px;
-    font-family: 'Montserrat', sans-serif;
-    background-color: #968a86;
+::-webkit-scrollbar {
+    width: 10px;
 }
 
-.carouselPicture {
-    width: 45%;
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+ ::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

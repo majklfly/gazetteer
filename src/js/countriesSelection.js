@@ -20,11 +20,9 @@ export const countriesSelection = $.ajax({
 
 // updated localstorage based on new fetch
 $("#searchInput").on("keypress", function(e) {
-    loading = true;
     const currentValue = $("#searchInput").val();
+    console.log("implementedValue", currentValue);
     const countryCode = localStorage.setItem("countryCode", currentValue);
-
-    console.log(currentValue);
     if (e.which == 13) {
         $.ajax({
             url: `https://restcountries.eu/rest/v2/alpha/${currentValue}`,

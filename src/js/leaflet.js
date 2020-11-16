@@ -2,6 +2,7 @@ import L from "leaflet";
 import $ from "jquery";
 import { retrieveWeatherData } from "./weather";
 import { covidFetch } from "./covid";
+import { fetchDataForGallery } from "./photoGallery";
 
 let latitude;
 let longitude;
@@ -12,8 +13,8 @@ loading
     $("#loadingAnimation").css("visibility", "visible") :
     $("#loadingAnimation").css("visibility", "hidden");
 
-// fetch data about current location
-export const fetchCurrentLocation = () => {
+// fetch data about current location and setting first render
+export const firstRender = () => {
     loading = true;
     $.ajax({
         url: "https://api.ipgeolocation.io/ipgeo?apiKey=" + GEO_API_KEY,
@@ -33,6 +34,7 @@ export const fetchCurrentLocation = () => {
             leafletmap();
             retrieveWeatherData();
             covidFetch();
+            fetchDataForGallery();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
