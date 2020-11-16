@@ -42,7 +42,7 @@ export const updateRender = async() => {
     const title = localStorage.getItem("countryName");
     document.getElementById("countryTitle").innerHTML = title;
     if (title && title.length > 30) {
-        $("#countryTitle").css("font-size", "1.8vw");
+        $("#countryTitle").css("font-size", "clamp(10px, 4vw, 25px)");
     }
     await leafletmap();
     await retrieveWeatherData();
