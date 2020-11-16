@@ -136,6 +136,20 @@ body {
     transform: translateX(-50%);
 }
 
+footer {
+    background-color: darkgray;
+    margin-top: 10%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer>h3 {
+    font-size: clamp(10px, 4vw, 20px);
+    font-family: 'Montserrat', sans-serif;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
 }
