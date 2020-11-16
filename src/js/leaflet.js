@@ -13,28 +13,18 @@ loading
     $("#loadingAnimation").css("visibility", "visible") :
     $("#loadingAnimation").css("visibility", "hidden");
 
-// fetch data about current location and setting first render
-export const firstRender = () => {
-    loading = true;
+const getCountryPolyglot = (countryCode, map) => {
     $.ajax({
-        url: "https://api.ipgeolocation.io/ipgeo?apiKey=" + GEO_API_KEY,
+        url: "/src/data/countries.geojson",
         type: "GET",
         dataType: "json",
         success: function(result) {
-            localStorage.setItem("latitude", result.latitude);
-            localStorage.setItem("longitude", result.longitude);
-            const countryCode = result.country_code2;
-            localStorage.setItem("countryCode", countryCode);
-            localStorage.setItem("countryName", result.country_name);
-            const title = localStorage.getItem("countryName");
-            document.getElementById("countryTitle").innerHTML = title;
-            if (title && title.length > 30) {
-                $("#countryTitle").css("font-size", "1.8vw");
-            }
-            leafletmap();
-            retrieveWeatherData();
-            covidFetch();
-            fetchDataForGallery();
+            result.features.map((country) => {
+                if (country.properties.ISO_A3 === countryCode) {
+                    console.log(country);
+                    L.geoJSON(country).addTo(map);
+                }
+            });
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
@@ -46,6 +36,7 @@ export const firstRender = () => {
 export const leafletmap = () => {
     const latitude = localStorage.getItem("latitude");
     const longitude = localStorage.getItem("longitude");
+    const countryCode3 = localStorage.getItem("countryCode3");
 
     var map = L.map("mapid").setView([latitude, longitude], 5);
     L.tileLayer(
@@ -56,6 +47,8 @@ export const leafletmap = () => {
             ext: "jpg",
         }
     ).addTo(map);
+
+    getCountryPolyglot(countryCode3, map);
 
     var popup = L.popup()
         .setLatLng([latitude, longitude])

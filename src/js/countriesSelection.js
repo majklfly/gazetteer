@@ -29,7 +29,8 @@ $("#searchInput").on("keypress", function(e) {
             type: "GET",
             dataType: "json",
             success: function(result) {
-                console.log(result);
+                console.log("success", result);
+                localStorage.setItem("countryCode3", result.alpha3Code);
                 localStorage.setItem("countryName", result.name);
                 localStorage.setItem("latitude", result.latlng[0]);
                 localStorage.setItem("longitude", result.latlng[1]);

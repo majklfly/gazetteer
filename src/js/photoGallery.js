@@ -3,8 +3,6 @@ import "lightgallery/dist/js/lightgallery-all.min";
 import $ from "jquery";
 import "lg-zoom";
 import "lg-pager";
-import "lg-thumbnail";
-import "lg-share";
 import "lg-fullscreen";
 
 export const fetchDataForGallery = () => {
@@ -24,6 +22,10 @@ export const fetchDataForGallery = () => {
                         enableDrag: false,
                         loop: true,
                         speed: 1500,
+                        autoplayControls: false,
+                        zoom: false,
+                        rotate: false,
+                        share: false,
                     });
                 });
             });
@@ -33,7 +35,7 @@ export const fetchDataForGallery = () => {
                     item.urls.full +
                     " class='galleryItem'><img src=" +
                     item.urls.small +
-                    "/></a>"
+                    " /></a>"
                 )
             );
         });
