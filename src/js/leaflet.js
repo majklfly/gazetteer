@@ -21,7 +21,6 @@ const getCountryPolyglot = (countryCode, map) => {
         success: function(result) {
             result.features.map((country) => {
                 if (country.properties.ISO_A3 === countryCode) {
-                    console.log(country);
                     L.geoJSON(country).addTo(map);
                 }
             });

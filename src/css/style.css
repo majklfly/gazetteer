@@ -156,6 +156,22 @@ footer {
     text-align: center;
 }
 
+#loadingContainer {
+    width: 100vw;
+    height: 200vh;
+    background-color: black;
+    opacity: 0.9;
+    position: absolute;
+    z-index: 2;
+    display: flex;
+}
+
+.loadingAnimation {
+    margin-left: 50%;
+    margin-top: 30%;
+    transform: translate(-50%, -50%);
+}
+
 footer>h3 {
     font-size: clamp(5px, 4vw, 20px);
     font-family: 'Montserrat', sans-serif;

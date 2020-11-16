@@ -6,8 +6,9 @@ import { covidFetch } from "./covid";
 import { fetchDataForGallery } from "./photoGallery";
 
 // fetch data about current location and setting first render
-export const firstRender = () => {
-    $.ajax({
+export const firstRender = async() => {
+    $("#loadingContainer").css("display", "block");
+    await $.ajax({
         url: "https://api.ipgeolocation.io/ipgeo?apiKey=" + GEO_API_KEY,
         type: "GET",
         dataType: "json",
@@ -24,27 +25,30 @@ export const firstRender = () => {
             if (title && title.length > 30) {
                 $("#countryTitle").css("font-size", "1.8vw");
             }
-            leafletmap();
-            retrieveWeatherData();
-            covidFetch();
-            fetchDataForGallery();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
         },
     });
+    await leafletmap();
+    await retrieveWeatherData();
+    await covidFetch();
+    await fetchDataForGallery();
+    $("#loadingContainer").css("display", "none");
 };
 
-export const updateRender = () => {
+export const updateRender = async() => {
+    $("#loadingContainer").css("display", "block");
     const title = localStorage.getItem("countryName");
     document.getElementById("countryTitle").innerHTML = title;
     if (title && title.length > 30) {
         $("#countryTitle").css("font-size", "1.8vw");
     }
-    leafletmap();
-    retrieveWeatherData();
-    covidFetch();
-    fetchDataForGallery();
+    await leafletmap();
+    await retrieveWeatherData();
+    await covidFetch();
+    await fetchDataForGallery();
+    $("#loadingContainer").css("display", "none");
 };
 
 //decides between first render or already search followed by sequence of calls
