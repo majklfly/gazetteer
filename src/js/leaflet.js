@@ -1,24 +1,14 @@
 import L from "leaflet";
 import { ajaxGet } from "./utils";
 
-//creates the polygon of the country
-const getCountryPolyglot = async(countryCode, map) => {
-    const result = await ajaxGet("countryPolygon.php");
-    console.log(result);
-    result.features.map((country) => {
-        if (country.properties.ISO_A3 === countryCode) {
-            L.geoJSON(country).addTo(map);
-        }
-    });
-};
+const latitude = localStorage.getItem("latitude");
+const longitude = localStorage.getItem("longitude");
+
+const map = L.map("mapid").setView([latitude, longitude], 5);
 
 // calls API based on user's IP and returns location
-export const leafletmap = () => {
-    const latitude = localStorage.getItem("latitude");
-    const longitude = localStorage.getItem("longitude");
+export const leafletmap = async() => {
     const countryCode3 = localStorage.getItem("countryCode3");
-
-    var map = L.map("mapid").setView([latitude, longitude], 5);
     L.tileLayer(
         "https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}", {
             subdomains: "abcd",
@@ -28,7 +18,15 @@ export const leafletmap = () => {
         }
     ).addTo(map);
 
-    getCountryPolyglot(countryCode3, map);
+    const result = await ajaxGet("countryPolygon.php");
+    if (result) {
+        result.map((country) => {
+            if (country.properties.ISO_A3 === countryCode3) {
+                const feature = L.geoJSON(country).addTo(map);
+                map.fitBounds(feature.getBounds());
+            }
+        });
+    }
 
     var popup = L.popup()
         .setLatLng([latitude, longitude])
