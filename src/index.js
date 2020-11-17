@@ -1,4 +1,5 @@
 import $ from "jquery";
+import "bootstrap";
 import { ajaxGet } from "./js/utils";
 
 import { countriesSelection } from "./js/countriesSelection";
@@ -9,16 +10,14 @@ import { fetchDataForGallery } from "./js/photoGallery";
 
 const Render = async() => {
     $("#loadingContainer").css("display", "block");
-    const latitude = localStorage.getItem("latitude");
-    if (!latitude) {
-        const result = await ajaxGet("currentLocation.php", { key: GEO_API_KEY });
-        localStorage.setItem("latitude", result.latitude);
-        localStorage.setItem("longitude", result.longitude);
-        localStorage.setItem("countryCode3", result.country_code3);
-        localStorage.setItem("countryCode", result.country_code2);
-        localStorage.setItem("countryName", result.country_name);
-        document.getElementById("countryTitle").innerHTML = result.country_name;
-    }
+    const result = await ajaxGet("currentLocation.php", { key: GEO_API_KEY });
+    console.log(result);
+    localStorage.setItem("latitude", result.latitude);
+    localStorage.setItem("longitude", result.longitude);
+    localStorage.setItem("countryCode3", result.country_code3);
+    localStorage.setItem("countryCode", result.country_code2);
+    localStorage.setItem("countryName", result.country_name);
+    document.getElementById("countryTitle").innerHTML = result.country_name;
     await countriesSelection();
     await leafletmap();
     await retrieveWeatherData();
@@ -26,7 +25,6 @@ const Render = async() => {
     await fetchDataForGallery();
     $("#loadingContainer").css("display", "none");
 };
-
 Render();
 
 //update localstorage based on recieved data
@@ -37,10 +35,11 @@ $("#searchInput").on("change", async function(e) {
     const data = await ajaxGet("getCountryDetails.php", {
         country: currentValue,
     });
+    console.log(data);
     localStorage.setItem("countryCode3", data[0].isoAlpha3);
     localStorage.setItem("countryName", data[0].countryName);
-    localStorage.setItem("latitude", data[0].south);
-    localStorage.setItem("longitude", data[0].west);
+    document.getElementById("countryTitle").innerHTML = data[0].countryName;
     await leafletmap();
+    await retrieveWeatherData();
     $("#loadingContainer").css("display", "none");
 });
