@@ -1,33 +1,14 @@
 import L from "leaflet";
-import $ from "jquery";
-import { retrieveWeatherData } from "./weather";
-import { covidFetch } from "./covid";
-import { fetchDataForGallery } from "./photoGallery";
+import { ajaxGet } from "./utils";
 
-let latitude;
-let longitude;
-export let loading;
-
-loading
-    ?
-    $("#loadingAnimation").css("visibility", "visible") :
-    $("#loadingAnimation").css("visibility", "hidden");
-
-const getCountryPolyglot = (countryCode, map) => {
-    $.ajax({
-        url: "/src/data/countries.geojson",
-        type: "GET",
-        dataType: "json",
-        success: function(result) {
-            result.features.map((country) => {
-                if (country.properties.ISO_A3 === countryCode) {
-                    L.geoJSON(country).addTo(map);
-                }
-            });
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
-        },
+//creates the polygon of the country
+const getCountryPolyglot = async(countryCode, map) => {
+    const result = await ajaxGet("countryPolygon.php");
+    console.log(result);
+    result.features.map((country) => {
+        if (country.properties.ISO_A3 === countryCode) {
+            L.geoJSON(country).addTo(map);
+        }
     });
 };
 
@@ -69,6 +50,4 @@ export const leafletmap = () => {
     L.marker([latitude, longitude], { icon: greenIcon })
         .addTo(map)
         .bindPopup(popup);
-
-    loading = false;
 };
