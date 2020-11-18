@@ -23,15 +23,29 @@ export const leafletmap = async() => {
         }
     ).addTo(map);
 
-    const result = await ajaxGet("countryPolygon.php");
-    if (result) {
-        result.map((country) => {
-            if (country.properties.ISO_A3 === countryCode3) {
-                const feature = L.geoJSON(country).addTo(map);
-                map.flyToBounds(feature.getBounds());
-            }
-        });
+
+
+
+    try {
+        const result = await ajaxGet("countryPolygon.php");
+
+        if (result) {
+            result.map((country) => {
+                if (country.properties.ISO_A3 === countryCode3) {
+                    const feature = L.geoJSON(country).addTo(map);
+                    map.flyToBounds(feature.getBounds());
+                }
+            });
+        }
+    } catch (e) {
+        console.log(e)
     }
+
+
+
+
+
+
 
     const capitalCity = await ajaxGet("capitalCityDetails.php", { countryCode });
     console.log(capitalCity);
