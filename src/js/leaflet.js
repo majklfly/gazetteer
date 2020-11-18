@@ -29,6 +29,8 @@ export const leafletmap = async() => {
     try {
         const result = await ajaxGet("countryPolygon.php");
 
+        console.log("countryPolygon", result)
+
         if (result) {
             result.map((country) => {
                 if (country.properties.ISO_A3 === countryCode3) {
@@ -38,7 +40,7 @@ export const leafletmap = async() => {
             });
         }
     } catch (e) {
-        console.log(e)
+        console.log("CountryPolygonError", e)
     }
 
 
