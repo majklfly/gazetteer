@@ -2,7 +2,7 @@
 
 $executionStartTime = microtime(true) / 1000;
 
-$url = "http://gazetteer-travel.herokuapp.com/src/data/countries.geojson" ;
+$url = "https://gazetteer-travel.herokuapp.com/src/data/countries.geojson" ;
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

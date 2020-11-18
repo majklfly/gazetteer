@@ -8,7 +8,7 @@
     },
     "scripts": {
         "heroku-prebuild": "npm install --dev",
-        "heroku-prebuild": "webpack --mode development --config ./webpack.config.js",
+        "heroku-postbuild": "webpack --mode development --config ./webpack.config.js",
         "start": "webpack serve --host 0.0.0.0",
         "dev": "webpack serve"
     },
