@@ -8,7 +8,7 @@ export const retrieveWeatherData = async() => {
     if (latitude && longitude) {
         $.ajax({
             url: "https://api.weatherapi.com/v1/current.json?key=" +
-                process.env.WEATHER_API_KEY +
+                WEATHER_API_KEY +
                 "&q=" +
                 latitude +
                 "," +
