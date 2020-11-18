@@ -1,19 +1,21 @@
 import L from "leaflet";
 import { ajaxGet } from "./utils";
 
-const latitude = localStorage.getItem("latitude");
-const longitude = localStorage.getItem("longitude");
+
+
+let map;
 
 // calls API based on user's IP and returns location
 export const leafletmap = async() => {
-    let map;
-
+    const latitude = localStorage.getItem("latitude");
+    const longitude = localStorage.getItem("longitude");
     const countryCode3 = localStorage.getItem("countryCode3");
     const countryCode = localStorage.getItem("countryCode");
 
-    if (typeof map == "undefined") {
-        map = L.map("mapid").setView([latitude, longitude], 5);
+    if (typeof map === "undefined") {
+        map = L.map("mapid")
     }
+    map.setView([latitude, longitude], 5);
 
     L.tileLayer(
         "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", {

@@ -5,7 +5,7 @@ export const ajaxGet = async(phpFile, data) => {
     let response;
     let error;
     await $.ajax({
-        url: "http://gazetteer-travel.herokuapp.com/src/php/" + phpFile,
+        url: "http://gazetteer-travel.herokuapp.com/src/" + phpFile,
         type: "GET",
         dataType: "json",
         data: data,
@@ -22,3 +22,7 @@ export const ajaxGet = async(phpFile, data) => {
         return error;
     }
 };
+
+// https://localhost/gazetteer/src/
+
+// http://gazetteer-travel.herokuapp.com/src/
