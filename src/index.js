@@ -1,5 +1,6 @@
 import $ from "jquery";
 import "bootstrap";
+import "@lottiefiles/lottie-player";
 import { ajaxGet } from "./js/utils";
 
 import { countriesSelection } from "./js/countriesSelection";
