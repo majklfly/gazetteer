@@ -1,8 +1,6 @@
 import L from "leaflet";
 import { ajaxGet } from "./utils";
 
-
-
 let map;
 
 // calls API based on user's IP and returns location
