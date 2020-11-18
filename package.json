@@ -2,7 +2,6 @@
     "name": "gazetteer",
     "version": "1.0.0",
     "description": "",
-    "type": "module",
     "main": "index.js",
     "engines": {
         "node": "13.13.0"
