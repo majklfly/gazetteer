@@ -11,19 +11,27 @@ import { fetchDataForGallery } from "./js/photoGallery";
 const Render = async() => {
     $("#loadingContainer").css("display", "block");
     const result = await ajaxGet("currentLocation.php", { key: GEO_API_KEY });
-    console.log(result);
-    localStorage.setItem("latitude", result.latitude);
-    localStorage.setItem("longitude", result.longitude);
-    localStorage.setItem("countryCode3", result.country_code3);
-    localStorage.setItem("countryCode", result.country_code2);
-    localStorage.setItem("countryName", result.country_name);
-    document.getElementById("countryTitle").innerHTML = result.country_name;
-    await countriesSelection();
-    await leafletmap();
-    await retrieveWeatherData();
-    await covidFetch();
-    await fetchDataForGallery();
-    $("#loadingContainer").css("display", "none");
+    if (typeof result != "undefined") {
+        localStorage.setItem("latitude", result.latitude);
+        localStorage.setItem("longitude", result.longitude);
+        localStorage.setItem("countryCode3", result.country_code3);
+        localStorage.setItem("countryCode", result.country_code2);
+        localStorage.setItem("countryName", result.country_name);
+        document.getElementById("countryTitle").innerHTML = result.country_name;
+        await countriesSelection();
+        await leafletmap();
+        await retrieveWeatherData();
+        await covidFetch();
+        await fetchDataForGallery();
+        $("#loadingContainer").css("display", "none");
+    } else {
+        $("#errorMessage").html(
+            "Can't find your location. Do you want me to get you to the best city in the world?"
+        );
+        $("#errorMessage").append(
+            " <button type='button' id='londonButton' class='btn btn-primary btn-lg'>Let's do it.</button>"
+        );
+    }
 };
 Render();
 
@@ -41,5 +49,23 @@ $("#searchInput").on("change", async function(e) {
     document.getElementById("countryTitle").innerHTML = data[0].countryName;
     await leafletmap();
     await retrieveWeatherData();
+    await covidFetch();
+    await fetchDataForGallery();
+    $("#loadingContainer").css("display", "none");
+});
+
+$("#londonButton").click(async function(e) {
+    $("#londonButton").remove();
+    localStorage.setItem("latitude", "51.5002");
+    localStorage.setItem("longitude", "-0.126236");
+    localStorage.setItem("countryCode3", "GBR");
+    localStorage.setItem("countryCode", "GB");
+    localStorage.setItem("countryName", "United Kingdom");
+    document.getElementById("countryTitle").innerHTML = "United Kingdom";
+    await countriesSelection();
+    await leafletmap();
+    await retrieveWeatherData();
+    await covidFetch();
+    await fetchDataForGallery();
     $("#loadingContainer").css("display", "none");
 });

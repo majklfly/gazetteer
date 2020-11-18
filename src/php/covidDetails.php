@@ -2,7 +2,7 @@
 
 $executionStartTime = microtime(true) / 1000;
 
-$url = "https://api.covid19api.com/total/dayone/country/gb" ;
+$url = "https://api.covid19api.com/total/dayone/country/" . $_REQUEST['countryCode'];
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

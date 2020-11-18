@@ -7,14 +7,18 @@ import { ajaxGet } from "./utils";
 export const covidFetch = async() => {
     const countryCode = localStorage.getItem("countryCode");
     const result = await ajaxGet("covidDetails.php", {
-        countryCode,
+        countryCode: countryCode,
     });
     const data = [];
     const labels = [];
-    result.map((day) => {
-        data.push(day.Active);
-        labels.push(moment(day.Date).format("DD/MM"));
-    });
+
+    if (result) {
+        result.map((day) => {
+            data.push(day.Active);
+            labels.push(moment(day.Date).format("DD/MM"));
+        });
+    }
+
     var ctx = $("#myChart");
     var myChart = new Chart(ctx, {
         type: "line",

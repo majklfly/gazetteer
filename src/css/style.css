@@ -44,9 +44,18 @@ header {
     border-radius: 10px;
 }
 
+#buttonsContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: 10vw;
+    top: 21vh;
+}
+
 .leaflet-popup-content-wrapper {
-    width: 70vw;
-    max-width: 1200px;
+    width: 50vw;
+    margin-right: 30vw;
+    max-width: 1000px;
     height: 50vh;
     background-color: #968a86;
 }
@@ -56,19 +65,18 @@ header {
 }
 
 .leaflet-popup-content {
-    width: 60vw !important;
+    width: 45vw !important;
     height: 45vh !important;
     position: relative;
 }
 
 .modalButton {
-    position: absolute;
-    top: 40%;
-    right: 10%;
     border-radius: 100%;
     width: 15vw;
     height: 15vw;
     font-family: 'Montserrat', sans-serif;
+    font-size: 2vw;
+    border: none;
     background-color: #968a86;
     z-index: 5;
     display: flex;
@@ -78,10 +86,11 @@ header {
     box-shadow: 0px 0px 10px 10px#968a86;
 }
 
+.modalButton:hover {
+    box-shadow: 0px 0px 20px 20px#968a86;
+}
+
 #weatherContainer {
-    position: absolute;
-    top: 25%;
-    right: 10%;
     border-radius: 100%;
     width: 15vw;
     height: 15vw;
@@ -126,12 +135,12 @@ header {
 
 #weatherPicture {
     height: 80%;
-    width: 80% !important;
+    width: 140% !important;
     position: absolute;
     right: 50%;
     transform: translateX(50%);
-    top: 10%;
-    opacity: 0.5;
+    opacity: 0.3;
+    z-index: 1;
 }
 
 #coronaContainer {
@@ -140,17 +149,16 @@ header {
     margin-top: 1%;
     width: 45%;
     min-width: 300px;
-    max-width: 400px;
+    min-height: 200px;
     font-family: 'Montserrat', sans-serif;
     background-color: #968a86;
     text-align: center;
     padding: 1.5%;
-    position: absolute;
-    z-index: 3;
-    top: 50%;
-    right: 10%;
-    width: 16vw;
-    height: 20vh;
+    margin-top: 20%;
+    margin-left: 50%;
+    transform: translate(-50%);
+    width: 50vw;
+    height: 30vw;
 }
 
 #coronaContainer>h2 {
@@ -189,9 +197,28 @@ footer {
     display: flex;
 }
 
+#errorMessage {
+    text-align: center;
+    width: 90vw;
+    padding-top: 10%;
+    padding-left: 5vw;
+    font-weight: bold;
+    font-size: 3.5vw;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#londonButton {
+    display: block;
+    margin-left: 52%;
+    transform: translateX(-50%);
+    margin-top: 5vh;
+    font-size: 2.5vw;
+}
+
 .loadingAnimation {
     margin-left: 50%;
-    margin-top: 30%;
+    margin-top: 20%;
     transform: translate(-50%, -50%);
 }
 

@@ -29,14 +29,17 @@ export const fetchDataForGallery = () => {
                     });
                 });
             });
-            data.results.map((item) =>
-                $("#lightgallery").append(
-                    "<a href=" +
-                    item.urls.full +
-                    " class='galleryItem'><img src=" +
-                    item.urls.small +
-                    " /></a>"
-                )
-            );
+            $(".galleryItem").remove();
+            if (data) {
+                data.results.map((item) => {
+                    $("#lightgallery").append(
+                        "<a href=" +
+                        item.urls.full +
+                        " class='galleryItem'><img src=" +
+                        item.urls.small +
+                        " width='100%' /></a>"
+                    );
+                });
+            }
         });
 };
