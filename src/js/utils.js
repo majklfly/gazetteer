@@ -23,6 +23,7 @@ export const ajaxGet = async(phpFile, data) => {
     }
 };
 
+
 // https://localhost/gazetteer/src/
 
 // http://gazetteer-travel.herokuapp.com/src/
