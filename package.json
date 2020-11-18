@@ -7,6 +7,7 @@
         "node": "12.13.1"
     },
     "scripts": {
+        "heroku-postbuild": "npm install --dev",
         "build": "webpack --mode development --config ./webpack.config.js",
         "start": "webpack serve --host 0.0.0.0",
         "dev": "webpack serve"
