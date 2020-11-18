@@ -3,6 +3,7 @@ import { ajaxGet } from "./utils";
 
 let map;
 
+
 // calls API based on user's IP and returns location
 export const leafletmap = async() => {
     const latitude = localStorage.getItem("latitude");
