@@ -8,6 +8,7 @@ import { retrieveWeatherData } from "./js/weather";
 import { covidFetch } from "./js/covid";
 import { fetchDataForGallery } from "./js/photoGallery";
 
+
 const Render = async() => {
     console.log("lets get started")
     // $("#loadingContainer").css("display", "block");
