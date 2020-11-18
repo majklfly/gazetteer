@@ -10,6 +10,8 @@ import { fetchDataForGallery } from "./js/photoGallery";
 
 const Render = async() => {
     console.log("lets get started")
+    // $("#loadingContainer").css("display", "block");
+    // const result = await ajaxGet("currentLocation.php", { key: GEO_API_KEY });
     if (typeof result != "undefined") {
         console.log("running")
         localStorage.setItem("latitude", result.latitude);
