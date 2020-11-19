@@ -17,7 +17,6 @@ export const fetchDataForGallery = () => {
             data.results.map((item, index) => {
                 $("#" + index).attr("href", item.urls.full);
                 $("#img" + index).attr("src", item.urls.small);
-                console.log(index);
             });
             $("#lightgallery").lightGallery({
                 cssEasing: "cubic-bezier(0.680, -0.550, 0.265, 1.550)",
