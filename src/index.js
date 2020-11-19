@@ -8,7 +8,6 @@ import { retrieveWeatherData } from "./js/weather";
 import { covidFetch } from "./js/covid";
 import { fetchDataForGallery } from "./js/photoGallery";
 
-console.log('key', REACT_APP_GEO_API_KEY)
 console.log("process", process.env.REACT_APP_GEO_API_KEY)
 
 const Render = async() => {
