@@ -6,9 +6,15 @@ import { ajaxGet } from "./utils";
 
 export const covidFetch = async() => {
     const countryCode = localStorage.getItem("countryCode");
-    const result = await ajaxGet("covidDetails.php", {
-        countryCode: countryCode,
-    });
+
+    try {
+        const result = await ajaxGet("covidDetails.php", {
+            countryCode: countryCode,
+        });
+    } catch (e) {
+        console.log(e);
+    }
+
     const data = [];
     const labels = [];
 
