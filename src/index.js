@@ -1,7 +1,7 @@
 import $ from "jquery";
 import "bootstrap";
 import { ajaxGet } from "./js/utils";
-import "dotenv";
+import {} from 'dotenv/config'
 
 import { countriesSelection } from "./js/countriesSelection";
 import { leafletmap } from "./js/leaflet";
