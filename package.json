@@ -12,6 +12,9 @@
         "start": "webpack serve --host 0.0.0.0 --config ./webpack.config.js",
         "dev": "webpack serve"
     },
+    "browser": {
+        "fs": false
+    },
     "author": "Michal Mucha",
     "license": "ISC",
     "dependencies": {
