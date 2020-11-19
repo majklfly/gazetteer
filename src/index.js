@@ -10,8 +10,8 @@ import { fetchDataForGallery } from "./js/photoGallery";
 
 const Render = async() => {
     $("#loadingContainer").css("display", "block");
-    const result = await ajaxGet("currentLocation.php", { key: GEO_API_KEY });
-    if (typeof result != "undefined") {
+    try {
+        const result = await ajaxGet("currentLocation.php", { key: GEO_API_KEY });
         localStorage.setItem("latitude", result.latitude);
         localStorage.setItem("longitude", result.longitude);
         localStorage.setItem("countryCode3", result.country_code3);
@@ -24,7 +24,7 @@ const Render = async() => {
         await covidFetch();
         await fetchDataForGallery();
         $("#loadingContainer").css("display", "none");
-    } else {
+    } catch (e) {
         $("#errorMessage").html(
             "Can't find your location. Do you want me to get you to the best city in the world?"
         );
