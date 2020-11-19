@@ -5,6 +5,7 @@ import { ajaxGet } from "./utils";
 export const countriesSelection = async() => {
     try {
         const list = await ajaxGet("countriesSelection.php");
+        console.log("selectionList", list);
         list.map((item) => {
             $("#countries").append(
                 `<option value=${item.alpha2Code}>${item.name}</option>`
