@@ -11,15 +11,9 @@ export const leafletmap = async() => {
     const countryCode3 = localStorage.getItem("countryCode3");
     const countryCode = localStorage.getItem("countryCode");
 
-    try {
-        if (typeof map === "undefined") {
-            map = L.map("mapid");
-        }
-        map.setView([latitude, longitude], 5);
-    } catch (e) {
-        console.log("mapError", e);
+    if (typeof map === "undefined") {
+        map = L.map("mapid");
     }
-
     map.setView([latitude, longitude], 5);
 
     L.tileLayer(
@@ -28,37 +22,35 @@ export const leafletmap = async() => {
         }
     ).addTo(map);
 
-    try {
-        $.ajax({
-            url: "https://localhost/gazetteer/src/data/countries.geojson",
-            type: "GET",
-            dataType: "json",
-            success: function(result) {
-                result.features.map((country) => {
-                    if (country.properties.ISO_A3 === countryCode3) {
-                        const feature = L.geoJSON(country).addTo(map);
-                        map.flyToBounds(feature.getBounds());
-                    }
-                });
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
-            },
-        });
-    } catch (e) {
-        console.log("CountryPolygonError", e);
-    }
+    $.ajax({
+        url: "https://localhost/gazetteer/src/data/countries.geojson",
+        type: "GET",
+        dataType: "json",
+        success: function(result) {
+            console.log("fly result", result);
+            result.features.map((country) => {
+                if (country.properties.ISO_A3 === countryCode3) {
+                    const feature = L.geoJSON(country).addTo(map);
+                    map.flyToBounds(feature.getBounds());
+                }
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        },
+    });
 
     try {
         const capitalRaw = await localStorage.getItem("capitalCity");
-        const capital = capitalRaw.split(" ")[0];
-        console.log(capital);
+        const capital = capitalRaw.replace(" ", "");
+
         const capitalCity = await ajaxGet("capitalCityDetails.php", {
             capitalCity: capital,
+            apiKey: CAPITAL_API_KEY,
+            countryCode: countryCode,
         });
-
-        localStorage.setItem("latitude", capitalCity.latt_long.split(",")[0]);
-        localStorage.setItem("longitude", capitalCity.latt_long.split(",")[1]);
+        localStorage.setItem("latitude", capitalCity.lat);
+        localStorage.setItem("longitude", capitalCity.lon);
         var popup = L.popup()
             .setLatLng([latitude, longitude])
             .setContent(
@@ -76,14 +68,9 @@ export const leafletmap = async() => {
             popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
         });
 
-        L.marker(
-                [
-                    capitalCity.latt_long.split(",")[0],
-                    capitalCity.latt_long.split(",")[1],
-                ], {
-                    icon: greenIcon,
-                }
-            )
+        L.marker([capitalCity.lat, capitalCity.lon], {
+                icon: greenIcon,
+            })
             .addTo(map)
             .bindPopup(popup);
     } catch (e) {

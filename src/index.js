@@ -42,12 +42,13 @@ $("#searchInput").on("change", async function(e) {
     const currentValue = $("#searchInput").val();
     localStorage.setItem("countryCode", currentValue);
     const data = await ajaxGet("getCountryDetails.php", {
-        country: currentValue,
+        countryCode: currentValue,
     });
-    localStorage.setItem("capitalCity", data[0].capital);
-    localStorage.setItem("countryCode3", data[0].isoAlpha3);
-    localStorage.setItem("countryName", data[0].countryName);
-    document.getElementById("countryTitle").innerHTML = data[0].countryName;
+    console.log("countryDataSearch", data);
+    localStorage.setItem("capitalCity", data.capital);
+    localStorage.setItem("countryCode3", data.alpha3Code);
+    localStorage.setItem("countryName", data.name);
+    document.getElementById("countryTitle").innerHTML = data.demonym;
     await leafletmap();
     await retrieveWeatherData();
     await covidFetch();

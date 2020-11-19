@@ -2,7 +2,7 @@
 
 $executionStartTime = microtime(true) / 1000;
 
-$url = "https://www.metaweather.com/api/location/search/?query=" . $_REQUEST['capitalCity'];
+$url = "https://api.weatherbit.io/v2.0/current?city=" . $_REQUEST['capitalCity'] . "&country=" . $_REQUEST['countryCode'] . "&key=" . $_REQUEST['apiKey'];
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -14,5 +14,5 @@ $result=curl_exec($ch);
 curl_close($ch);
 
 $decode = json_decode($result,true);	
-$output['data'] = $decode[0];
+$output['data'] = $decode['data'][0];
 echo json_encode($output); 

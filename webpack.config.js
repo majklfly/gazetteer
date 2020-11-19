@@ -49,6 +49,7 @@ module.exports = (env) => {
                 WEATHER_API_KEY: JSON.stringify(process.env.WEATHER_API_KEY),
                 GEO_API_KEY: JSON.stringify(process.env.GEO_API_KEY),
                 UNSPLASH_ACCESS_KEY: JSON.stringify(process.env.UNSPLASH_ACCESS_KEY),
+                CAPITAL_API_KEY: JSON.stringify(process.env.CAPITAL_API_KEY),
             }),
         ],
     };
