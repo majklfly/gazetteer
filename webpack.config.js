@@ -1,5 +1,4 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const RemoveStrictPlugin = require("remove-strict-webpack-plugin");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 

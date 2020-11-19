@@ -5,6 +5,7 @@
       {
         "include": ["NODE_ENV"]
       }
-    ]
+    ],
+    ["transform-remove-strict-mode"]
   ]
 }
