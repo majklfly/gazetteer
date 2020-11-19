@@ -51,7 +51,6 @@ module.exports = (env) => {
                 UNSPLASH_ACCESS_KEY: JSON.stringify(process.env.UNSPLASH_ACCESS_KEY),
                 CAPITAL_API_KEY: JSON.stringify(process.env.CAPITAL_API_KEY),
             }),
-            new RemoveStrictPlugin(),
         ],
     };
 };
