@@ -28,7 +28,6 @@ export const leafletmap = async() => {
             type: "GET",
             dataType: "json",
             success: function(result) {
-                console.log("polygon", result);
                 result.features.map((country) => {
                     if (country.properties.ISO_A3 === countryCode3) {
                         const feature = L.geoJSON(country).addTo(map);

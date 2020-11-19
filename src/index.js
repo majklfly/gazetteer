@@ -11,8 +11,7 @@ import { fetchDataForGallery } from "./js/photoGallery";
 const Render = async() => {
     $("#loadingContainer").css("display", "block");
     const result = await ajaxGet("currentLocation.php", { key: GEO_API_KEY });
-    console.log("locationResult", result);
-    if (typeof result != "undefined" || result.message) {
+    if (typeof result != "undefined") {
         localStorage.setItem("latitude", result.latitude);
         localStorage.setItem("longitude", result.longitude);
         localStorage.setItem("countryCode3", result.country_code3);
@@ -44,7 +43,6 @@ $("#searchInput").on("change", async function(e) {
     const data = await ajaxGet("getCountryDetails.php", {
         country: currentValue,
     });
-    console.log(data);
     localStorage.setItem("countryCode3", data[0].isoAlpha3);
     localStorage.setItem("countryName", data[0].countryName);
     document.getElementById("countryTitle").innerHTML = data[0].countryName;
