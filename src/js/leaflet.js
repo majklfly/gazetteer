@@ -3,8 +3,6 @@ import { ajaxGet } from "./utils";
 
 let map;
 
-
-
 // calls API based on user's IP and returns location
 export const leafletmap = async() => {
     const latitude = localStorage.getItem("latitude");
@@ -13,7 +11,7 @@ export const leafletmap = async() => {
     const countryCode = localStorage.getItem("countryCode");
 
     if (typeof map === "undefined") {
-        map = L.map("mapid")
+        map = L.map("mapid");
     }
     map.setView([latitude, longitude], 5);
 
@@ -23,13 +21,10 @@ export const leafletmap = async() => {
         }
     ).addTo(map);
 
-
-
-
     try {
         const result = await ajaxGet("countryPolygon.php");
 
-        console.log("countryPolygon", result)
+        console.log("countryPolygon", result);
 
         if (result) {
             result.map((country) => {
@@ -40,17 +35,16 @@ export const leafletmap = async() => {
             });
         }
     } catch (e) {
-        console.log("CountryPolygonError", e)
+        console.log("CountryPolygonError", e);
     }
 
-
-
-
-
-
-
-    const capitalCity = await ajaxGet("capitalCityDetails.php", { countryCode });
-    console.log(capitalCity);
+    try {
+        const capitalCity = await ajaxGet("capitalCityDetails.php", {
+            countryCode,
+        });
+    } catch (e) {
+        console.log("capitalCityError", e);
+    }
 
     localStorage.setItem("latitude", capitalCity.latitude);
     localStorage.setItem("longitude", capitalCity.longitude);

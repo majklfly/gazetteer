@@ -11,6 +11,6 @@ export const countriesSelection = async() => {
             );
         });
     } catch (e) {
-        console.log(e);
+        console.log("CountrySelectionError", e);
     }
 };
