@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const RemoveStrictPlugin = require("remove-strict-webpack-plugin");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
 
@@ -51,6 +52,7 @@ module.exports = (env) => {
                 UNSPLASH_ACCESS_KEY: JSON.stringify(process.env.UNSPLASH_ACCESS_KEY),
                 CAPITAL_API_KEY: JSON.stringify(process.env.CAPITAL_API_KEY),
             }),
+            new RemoveStrictPlugin(),
         ],
     };
 };
