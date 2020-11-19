@@ -5,6 +5,7 @@ $executionStartTime = microtime(true) / 1000;
 $url = "https://restcountries.eu/rest/v2/all";
 
 $ch = curl_init();
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_URL,$url);
 
