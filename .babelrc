@@ -1,7 +1,7 @@
 {
   "plugins": [
     [
-      require("@babel/plugin-transform-modules-commonjs"),
+      "@babel/plugin-transform-modules-commonjs",
       {
         "strictMode": false
       }
