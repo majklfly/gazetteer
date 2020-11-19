@@ -48,6 +48,7 @@
         "node-fetch": "^2.6.1",
         "php-loader": "^0.2.0",
         "popper.js": "^1.16.1",
+        "sockjs": "^0.3.21",
         "style-loader": "^2.0.0",
         "unsplash-js": "^6.3.0",
         "webpack": "^5.4.0",
