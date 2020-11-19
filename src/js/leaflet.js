@@ -1,4 +1,5 @@
 import L from "leaflet";
+import $ from "jquery";
 import { ajaxGet } from "./utils";
 
 let map;
