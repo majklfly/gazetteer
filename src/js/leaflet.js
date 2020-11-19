@@ -24,7 +24,7 @@ export const leafletmap = async() => {
 
     try {
         $.ajax({
-            url: "http://gazetteer-travel.herokuapp.com/src/data/countries.geojson",
+            url: "https://gazetteer-travel.herokuapp.com/src/data/countries.geojson",
             type: "GET",
             dataType: "json",
             success: function(result) {
