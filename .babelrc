@@ -1,11 +1,10 @@
 {
   "plugins": [
     [
-      "transform-inline-environment-variables",
+      require("@babel/plugin-transform-modules-commonjs"),
       {
-        "include": ["NODE_ENV"]
+        "strictMode": false
       }
     ]
-  ],
-  "presets": [["es2015", { "modules": false }]]
+  ]
 }
