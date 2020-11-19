@@ -8,14 +8,11 @@ import { retrieveWeatherData } from "./js/weather";
 import { covidFetch } from "./js/covid";
 import { fetchDataForGallery } from "./js/photoGallery";
 
-console.log("process", GEO_API_KEY);
-
 const Render = async() => {
-    console.log("lets get started");
     $("#loadingContainer").css("display", "block");
-    // const result = await ajaxGet("currentLocation.php", { key: GEO_API_KEY });
-    if (typeof result != "undefined") {
-        console.log("running");
+    const result = await ajaxGet("currentLocation.php", { key: GEO_API_KEY });
+    console.log("locationResult", result);
+    if (typeof result != "undefined" || result.message) {
         localStorage.setItem("latitude", result.latitude);
         localStorage.setItem("longitude", result.longitude);
         localStorage.setItem("countryCode3", result.country_code3);

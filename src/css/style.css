@@ -49,7 +49,7 @@ header {
     display: flex;
     flex-direction: column;
     right: 10vw;
-    top: 21vh;
+    top: 20vw;
 }
 
 .leaflet-popup-content-wrapper {
@@ -254,5 +254,8 @@ footer>h3 {
     #seachInputContainer {
         width: 90%;
         padding-right: 0;
+    }
+    #buttonsContainer {
+        top: 35vw;
     }
 }
