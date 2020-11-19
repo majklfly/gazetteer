@@ -14,15 +14,13 @@ $result=curl_exec($ch);
 
 curl_close($ch);
 
-echo $result
-
 $decode = json_decode($result,true);	
 
 $output['status']['code'] = "200";
 $output['status']['name'] = "ok";
 $output['status']['description'] = "mission saved";
 $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-$output['data'] = $decode;
+$output['data'] = $decode[0];
 
 header('Content-Type: application/json; charset=UTF-8');
 
