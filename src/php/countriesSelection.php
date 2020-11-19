@@ -10,7 +10,4 @@ $result=curl_exec($ch);
 
 curl_close($ch);
 
-$decode = json_decode($result,true);
-$output['data'] = $decode;
-
-echo json_encode($output); 
+echo json_encode($result); 
