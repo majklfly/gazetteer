@@ -1,6 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
-const dotenv = require("dotenv");
+const dotenv = require("dotenv").config();
 
 const port = process.env.PORT;
 
@@ -44,6 +44,7 @@ module.exports = (env) => {
                 filename: "./index.html",
             }),
             new webpack.DefinePlugin({
+                "process.env": JSON.stringify(dotenv.config().parsed),
                 NODE_ENV: JSON.stringify(process.env.NODE_ENV),
                 WEATHER_API_KEY: JSON.stringify(process.env.WEATHER_API_KEY),
                 GEO_API_KEY: JSON.stringify(process.env.GEO_API_KEY),
