@@ -42,12 +42,11 @@ export const leafletmap = async() => {
         const capitalCity = await ajaxGet("capitalCityDetails.php", {
             countryCode,
         });
+        localStorage.setItem("latitude", capitalCity.latitude);
+        localStorage.setItem("longitude", capitalCity.longitude);
     } catch (e) {
         console.log("capitalCityError", e);
     }
-
-    localStorage.setItem("latitude", capitalCity.latitude);
-    localStorage.setItem("longitude", capitalCity.longitude);
 
     var popup = L.popup()
         .setLatLng([latitude, longitude])
