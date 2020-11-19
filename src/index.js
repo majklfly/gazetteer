@@ -18,6 +18,7 @@ const Render = async() => {
         localStorage.setItem("countryCode3", result.country_code3);
         localStorage.setItem("countryCode", result.country_code2);
         localStorage.setItem("countryName", result.country_name);
+        localStorage.setItem("capitalCity", result.country_capital);
         document.getElementById("countryTitle").innerHTML = result.country_name;
         await countriesSelection();
         await leafletmap();
@@ -44,6 +45,7 @@ $("#searchInput").on("change", async function(e) {
     const data = await ajaxGet("getCountryDetails.php", {
         country: currentValue,
     });
+    localStorage.setItem("capitalCity", data[0].capital);
     localStorage.setItem("countryCode3", data[0].isoAlpha3);
     localStorage.setItem("countryName", data[0].countryName);
     document.getElementById("countryTitle").innerHTML = data[0].countryName;
@@ -62,6 +64,7 @@ $("#londonButton").click(async function(e) {
     localStorage.setItem("countryCode3", "GBR");
     localStorage.setItem("countryCode", "GB");
     localStorage.setItem("countryName", "United Kingdom");
+    localStorage.setItem("capitalCity", "London");
     document.getElementById("countryTitle").innerHTML = "United Kingdom";
     await countriesSelection();
     await leafletmap();

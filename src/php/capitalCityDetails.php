@@ -2,7 +2,7 @@
 
 $executionStartTime = microtime(true) / 1000;
 
-$url = "http://api.worldbank.org/v2/country/" . $_REQUEST['countryCode'] . "?format=json";
+$url = "https://www.metaweather.com/api/location/search/?query=" . $_REQUEST['capitalCity'];
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -14,13 +14,5 @@ $result=curl_exec($ch);
 curl_close($ch);
 
 $decode = json_decode($result,true);	
-
-$output['status']['code'] = "200";
-$output['status']['name'] = "ok";
-$output['status']['description'] = "mission saved";
-$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-$output['data'] = $decode[1][0];
-
-header('Content-Type: application/json; charset=UTF-8');
-
+$output['data'] = $decode[0];
 echo json_encode($output); 

@@ -11,9 +11,15 @@ export const leafletmap = async() => {
     const countryCode3 = localStorage.getItem("countryCode3");
     const countryCode = localStorage.getItem("countryCode");
 
-    if (typeof map === "undefined") {
-        map = L.map("mapid");
+    try {
+        if (typeof map === "undefined") {
+            map = L.map("mapid");
+        }
+        map.setView([latitude, longitude], 5);
+    } catch (e) {
+        console.log("mapError", e);
     }
+
     map.setView([latitude, longitude], 5);
 
     L.tileLayer(
@@ -24,7 +30,7 @@ export const leafletmap = async() => {
 
     try {
         $.ajax({
-            url: "https://gazetteer-travel.herokuapp.com/src/data/countries.geojson",
+            url: "https://localhost/gazetteer/src/data/countries.geojson",
             type: "GET",
             dataType: "json",
             success: function(result) {
@@ -44,11 +50,15 @@ export const leafletmap = async() => {
     }
 
     try {
+        const capitalRaw = await localStorage.getItem("capitalCity");
+        const capital = capitalRaw.split(" ")[0];
+        console.log(capital);
         const capitalCity = await ajaxGet("capitalCityDetails.php", {
-            countryCode,
+            capitalCity: capital,
         });
-        localStorage.setItem("latitude", capitalCity.latitude);
-        localStorage.setItem("longitude", capitalCity.longitude);
+
+        localStorage.setItem("latitude", capitalCity.latt_long.split(",")[0]);
+        localStorage.setItem("longitude", capitalCity.latt_long.split(",")[1]);
         var popup = L.popup()
             .setLatLng([latitude, longitude])
             .setContent(
@@ -66,7 +76,14 @@ export const leafletmap = async() => {
             popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
         });
 
-        L.marker([capitalCity.latitude, capitalCity.longitude], { icon: greenIcon })
+        L.marker(
+                [
+                    capitalCity.latt_long.split(",")[0],
+                    capitalCity.latt_long.split(",")[1],
+                ], {
+                    icon: greenIcon,
+                }
+            )
             .addTo(map)
             .bindPopup(popup);
     } catch (e) {
