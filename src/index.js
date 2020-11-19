@@ -10,7 +10,6 @@ import { fetchDataForGallery } from "./js/photoGallery";
 
 console.log("process", process.env)
 
-
 const Render = async() => {
     console.log("lets get started")
     // $("#loadingContainer").css("display", "block");
