@@ -8,7 +8,7 @@ import { retrieveWeatherData } from "./js/weather";
 import { covidFetch } from "./js/covid";
 import { fetchDataForGallery } from "./js/photoGallery";
 
-console.log("variables", process.env)
+console.log(GEO_API_KE)
 
 const Render = async() => {
     console.log("lets get started")
