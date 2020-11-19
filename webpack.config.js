@@ -1,6 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
-const dotenv = require("dotenv").config();
+const dotenv = require("dotenv");
 
 const port = process.env.PORT;
 
