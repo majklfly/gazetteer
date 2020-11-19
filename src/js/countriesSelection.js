@@ -7,7 +7,7 @@ export const countriesSelection = async() => {
         const list = await ajaxGet("countriesSelection.php");
         list.map((item) => {
             $("#countries").append(
-                `<option value=${item.countryCode}>${item.countryName}</option>`
+                `<option value=${item.alpha2Code}>${item.name}</option>`
             );
         });
     } catch (e) {
