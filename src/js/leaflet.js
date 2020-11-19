@@ -24,11 +24,12 @@ export const leafletmap = async() => {
 
     try {
         $.ajax({
-            url: "https://gazetteer-travel.herokuapp.com/src/data/countries.geojson",
+            url: "http://gazetteer-travel.herokuapp.com/src/data/countries.geojson",
             type: "GET",
             dataType: "json",
             success: function(result) {
-                result.map((country) => {
+                console.log("polygon", result);
+                result.features.map((country) => {
                     if (country.properties.ISO_A3 === countryCode3) {
                         const feature = L.geoJSON(country).addTo(map);
                         map.flyToBounds(feature.getBounds());
