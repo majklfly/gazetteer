@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-// make ajax call to weather API and injects data with jquery to html documents
+// make ajax call to weather API and injects data with jquery to html document
 export const retrieveWeatherData = async() => {
     const latitude = await localStorage.getItem("latitude");
     const longitude = await localStorage.getItem("longitude");
