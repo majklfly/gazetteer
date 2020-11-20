@@ -21,6 +21,7 @@
         "babel-loader": "^8.2.1",
         "babel-plugin-transform-inline-environment-variables": "^0.4.3",
         "babel-plugin-transform-remove-strict-mode": "0.0.2",
+        "babel-preset-env": "^1.7.0",
         "bootstrap": "^4.5.3",
         "canvasjs": "^1.8.3",
         "chart.js": "^2.9.4",
