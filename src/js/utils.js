@@ -7,7 +7,6 @@ export const ajaxGet = async(phpFile, data) => {
     await $.ajax({
         url: "http://gazetteer-travel.herokuapp.com/src/php/" + phpFile,
         type: "GET",
-        dataType: "json",
         data: data,
         success: function(result) {
             response = result;
