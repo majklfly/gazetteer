@@ -8,7 +8,7 @@ export const ajaxGet = async(phpFile, data) => {
         url: "https://gazetteer-php-server.herokuapp.com/src/" + phpFile,
         type: "GET",
         headers: {
-            "Access-Control-Allow-Origin": "https://gazetteer-php-server.herokuapp.com/src/",
+            "Access-Control-Allow-Origin": "https://gazetteer-php-server.herokuapp.com/src/" + phpFile,
         },
         data: data,
         success: function(result) {
