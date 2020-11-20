@@ -1,5 +1,5 @@
 {
   "sourceType": "unambiguous",
-  "presets": ["env"],
+  "presets": ["@babel/preset-env"],
   "plugins": ["transform-remove-strict-mode"]
 }
