@@ -7,6 +7,7 @@ export const ajaxGet = async(phpFile, data) => {
     await $.ajax({
         url: "https://gazetteer-php-server.herokuapp.com/src/" + phpFile,
         type: "GET",
+        crossDomain: true,
         data: data,
         success: function(result) {
             response = result;
