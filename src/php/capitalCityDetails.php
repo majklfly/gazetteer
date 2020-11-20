@@ -15,4 +15,7 @@ curl_close($ch);
 
 $decode = json_decode($result,true);	
 $output['data'] = $decode['data'][0];
+
+header('Content-Type: application/json; charset=UTF-8');
+
 echo json_encode($output); 
