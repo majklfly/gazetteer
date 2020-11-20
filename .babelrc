@@ -1,3 +1,5 @@
 {
-  "sourceType": "unambiguous"
+  "sourceType": "unambiguous",
+  "presets": ["env"],
+  "plugins": ["transform-remove-strict-mode"]
 }
