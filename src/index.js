@@ -43,7 +43,6 @@ $("#searchInput").on("change", async function(e) {
     const data = await ajaxGet("getCountryDetails.php", {
         countryCode: currentValue,
     });
-    console.log("countryDataSearch", data);
     localStorage.setItem("capitalCity", data.capital);
     localStorage.setItem("countryCode3", data.alpha3Code);
     localStorage.setItem("countryName", data.name);
