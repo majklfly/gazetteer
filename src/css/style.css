@@ -177,6 +177,21 @@ header {
     transform: translateX(-50%);
 }
 
+#myChart {
+    width: 90%;
+}
+
+#resourcesContainer>a {
+    color: white;
+}
+
+.resourcesButton {
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: transparent;
+    margin-left: 1%;
+}
+
 footer {
     background-color: darkgray;
     margin-top: 10%;

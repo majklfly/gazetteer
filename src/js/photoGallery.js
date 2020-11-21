@@ -14,7 +14,15 @@ export const fetchDataForGallery = () => {
         .then(toJson)
         .then((data) => {
             $(".galleryItem").remove();
+            $(".photoAuthor").remove();
             data.results.map((item, index) => {
+                $("#resourcesContainer").append(
+                    "<a href=" +
+                    item.user.portfolio_url +
+                    " class='photoAuthor'><h2>" +
+                    item.user.name +
+                    "</h2></a>"
+                );
                 $("#" + index).attr("href", item.urls.full);
                 $("#img" + index).attr("src", item.urls.small);
             });
