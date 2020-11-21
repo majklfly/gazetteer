@@ -23,7 +23,7 @@ export const leafletmap = async() => {
     ).addTo(map);
 
     $.ajax({
-        url: "https://localhost/gazetteer/src/data/countries.geojson",
+        url: "http://gazetteer-travel.herokuapp.com/src/data/countries.geojson",
         type: "GET",
         dataType: "json",
         success: function(result) {
