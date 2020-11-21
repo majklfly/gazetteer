@@ -24,7 +24,6 @@ const Render = async() => {
         await retrieveWeatherData();
         await covidFetch();
         await fetchDataForGallery();
-        $("#loadingContainer").css("display", "none");
     } catch (e) {
         $("#errorMessage").html(
             "Can't find your location. Do you want me to get you to the best city in the world?"
@@ -53,7 +52,6 @@ $("#searchInput").on("change", async function(e) {
     await retrieveWeatherData();
     await covidFetch();
     await fetchDataForGallery();
-    $("#loadingContainer").css("display", "none");
 });
 
 $("#londonButton").click(async function(e) {
@@ -71,5 +69,4 @@ $("#londonButton").click(async function(e) {
     await retrieveWeatherData();
     await covidFetch();
     await fetchDataForGallery();
-    $("#loadingContainer").css("display", "none");
 });

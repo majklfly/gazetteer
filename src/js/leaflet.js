@@ -31,6 +31,7 @@ export const leafletmap = async() => {
             result.features.map((country) => {
                 if (country.properties.ISO_A3 === countryCode3) {
                     const feature = L.geoJSON(country).addTo(map);
+                    $("#loadingContainer").css("display", "none");
                     map.flyToBounds(feature.getBounds());
                 }
             });
