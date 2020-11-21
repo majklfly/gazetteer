@@ -6,16 +6,14 @@ export const ajaxGet = async(phpFile, data) => {
     let error;
     await $.ajax({
         url: "https://gazetteer-php-server.herokuapp.com/src/" + phpFile,
-        type: "GET",
-        headers: {
-            "Access-Control-Allow-Origin": "https://gazetteer-php-server.herokuapp.com/src/" + phpFile,
-        },
+        dataType: "jsonp",
+        contentType: "application/json",
         data: data,
         success: function(result) {
             response = result;
         },
-        error: function(errorThrown) {
-            error = errorThrown;
+        error: function(jqXHR, textStatus, errorThrown) {
+            error = jqXHR;
         },
     });
     if (response) {
