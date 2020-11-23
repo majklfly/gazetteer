@@ -21,7 +21,7 @@ $countryBorders = json_decode($result,true);
 $border = null;
 
 foreach($countryBorders['features'] as $feature) {
-    if ($feature['properties']["ISO_A3"] == $_REQUEST['countryCode3']) {
+    if ($feature['properties']["ISO_A3"] == "GBR") {
         $border = $feature;
     break;
     }

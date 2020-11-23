@@ -74,10 +74,11 @@ const getWeatherData = () => {
 
 // renders the polygon of the country
 const countryPolygon = () => {
+    console.log(countryCode3);
     $.ajax({
         url: "src/php/countryPolygon.php",
         type: "GET",
-        dataType: "jsonp",
+        dataType: "json",
         data: {
             countryCode3: countryCode3,
         },
