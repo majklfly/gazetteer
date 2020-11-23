@@ -75,26 +75,25 @@ const getWeatherData = () => {
 // renders the polygon of the country
 const countryPolygon = () => {
     $.ajax({
-        url: "src/php/countries.geo.json",
+        url: "src/php/countryPolygon.php",
         type: "GET",
         dataType: "json",
         data: {
             countryCode3: countryCode3,
         },
         success: function(result) {
-            console.log(result);
-            // if (map.hasLayer(border)) {
-            //     map.removeLayer(border);
-            // }
+            if (map.hasLayer(border)) {
+                map.removeLayer(border);
+            }
 
-            // border = L.geoJson(result.data, {
-            //     color: "#ff7800",
-            //     weight: 2,
-            //     opacity: 0.65,
-            // }).addTo(map);
+            border = L.geoJson(result.data, {
+                color: "#ff7800",
+                weight: 2,
+                opacity: 0.65,
+            }).addTo(map);
 
-            // map.flyToBounds(border.getBounds());
-            // $("#loadingContainer").css("display", "none");
+            map.flyToBounds(border.getBounds());
+            $("#loadingContainer").css("display", "none");
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR);
