@@ -19,4 +19,6 @@ $output['status']['description'] = "success";
 $output['status']['executedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
 $output['data'] = $border;
 
+header('Content-Type: application/json; charset=UTF-8');
+
 echo json_encode($output); 
