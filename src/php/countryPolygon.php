@@ -1,6 +1,6 @@
 <?php
 
-$executionStartTime = microtime(true);
+$executionStartTime = microtime(true) / 1000;
 
 $url = "https://gazetteer-travel.herokuapp.com/src/php/countries.geo.json";
 
