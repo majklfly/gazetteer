@@ -1,6 +1,6 @@
 <?php
 
-ini_set('display_errors', 'On');
+ini_set('memory_limit', '-1');
 error_reporting(E_ALL);
 
 $executionStartTime = microtime(true);
