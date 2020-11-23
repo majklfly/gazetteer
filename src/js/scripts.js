@@ -12,7 +12,7 @@ let marker;
 // gets the capital city of the country and adds a marker on the map
 const getCapitalCity = () => {
     const capitalRaw = capitalCity;
-    const capitalNoSpace = capitalCity.replace(" ", "");
+    const capitalNoSpace = capitalRaw.replace(" ", "");
     $.ajax({
         url: "src/php/capitalCityDetails.php",
         type: "GET",
@@ -23,6 +23,9 @@ const getCapitalCity = () => {
             apiKey: "1856257054eb4dd4a53ffbdc7327374d",
         },
         success: function(result) {
+            latitude = result.data.lat;
+            longitude = result.data.lon;
+            getWeatherData();
             var popup = L.popup()
                 .setLatLng([result.data.lat, result.data.lon])
                 .setContent(
@@ -66,6 +69,7 @@ const getWeatherData = () => {
         type: "GET",
         dataType: "json",
         success: function(result) {
+            console.log("weather result", result);
             $("#weatherTitle").html(result.current.condition.text);
             $("#wind").html("Wind: " + result.current.wind_kph + "km/h");
             $("#temp").html("Temp: " + result.current.temp_c + "°C");
@@ -145,7 +149,7 @@ $.ajax({
         capitalCity = result.data.country_capital;
         localStorage.setItem("countryCode", result.data.country_code2);
         //gives the title of the country
-        $("#countryTitle").html(countryName);
+        $("#countryTitle").html(result.data.country_name);
         renderMap();
         getCapitalCity();
         getWeatherData();
@@ -165,8 +169,9 @@ $.ajax({
     data: {},
     success: function(result) {
         result.data.map((item) => {
+            console.log(item);
             $("#searchInput").append(
-                "<option value=" + item.alpha2Code + " >" + item.demonym + "</option>"
+                "<option value=" + item.alpha2Code + " >" + item.name + "</option>"
             );
         });
     },
@@ -192,8 +197,8 @@ $("#searchInput").on("change", function(e) {
             countryName = result.data.name;
             capitalCity = result.data.capital;
             localStorage.setItem("countryCode", result.data.alpha2Code);
+            $("#countryTitle").html(result.data.name);
             getCapitalCity();
-            getWeatherData();
             photoGallery();
             countryPolygon();
         },
