@@ -123,7 +123,7 @@ const photoGallery = () => {
     console.log("result2", result2);
 };
 
-// gets user's IP address and retrieves initial data back + calls all need functions
+// gets user's IP address and retrieves initial data back + calls all need function
 $.ajax({
     url: "src/php/currentLocation.php",
     type: "GET",
