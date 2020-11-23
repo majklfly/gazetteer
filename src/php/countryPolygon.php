@@ -1,22 +1,24 @@
 <?php
 
-$executionStartTime = microtime(true) / 1000;
+$executionStartTime = microtime(true);
 
-$url = "http://gazetteer-travel.herokuapp.com/src/" ;
+$countryBorders = json_decode(file_get_contents("../data/countries.geojson"), true);
 
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_URL,$url);
+$border = null;
 
-$result=curl_exec($ch);
+foreach($countryBorders['features'] as $feature) {
+    if ($feature['properties']["ISO_A3"] == $_REQUEST['countryCode3']) {
+        $border = $feature;
+    break;
+    }
+}
 
-curl_close($ch);
+$output['status']['code'] = "200";
+$output['status']['name'] = "ok";
+$output['status']['description'] = "mission saved";
+$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+$output['data'] = $border;
 
-$decode = json_decode($result,true);	
-$output['data'] = $decode['features'];
+header('Content-Type: application/json; charset=UTF-8');
+
 echo json_encode($output); 
-
-// https://localhost/gazetteer/src/
-
-// http://gazetteer-travel.herokuapp.com/src/

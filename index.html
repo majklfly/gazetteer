@@ -6,30 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Relevant info about countries around the world">
     <meta name="author" content="Michal Mucha">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital@1&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="">
-    <link rel="stylesheet" href="/src/css/style.css">
-    <link rel="stylesheet" href="/src/css/galleryStyle.css">
-    <link rel="stylesheet" href="/src/css/lightgallery.css">
+    <link href="https://fonts.googleapis.com/css2?family=Acme&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/data/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="src/data/leaflet/leaflet.css">
+    <link rel="stylesheet" href="src/css/style.css">
+    <script src="src/data/jquery.min.js"></script>
+    <script src="src/data/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="src/data/leaflet/leaflet.js"></script>
+    <script src="src/js/unsplash-source.js"></script>
     <title>Gazetteer</title>
 </head>
 
 <body>
     <div id="loadingContainer">
-        <h1 id="errorMessage"></h1>
         <lottie-player class="loadingAnimation" src="https://assets5.lottiefiles.com/temp/lf20_ssLgHu.json" background="transparent" speed="1" style="width: 30vw; height: 30vw;" loop autoplay></lottie-player>
     </div>
     <header id="header">
-        <h1 id="countryTitle"></h1>
+        <h1 id="countryTitle">a</h1>
         <div class="input-group mb-3" id="seachInputContainer">
-            <input type="text" class="form-control" placeholder="Country..." id="searchInput" list="countries">
+            <select type="text" class="form-control" id="searchInput"></select>
         </div>
-        <datalist id="countries">
-            <option value="GB">Great Britain</option>
-          </datalist>
     </header>
     <section id="buttonsContainer">
         <article id="weatherContainer">
@@ -40,10 +38,6 @@
                 <p id="temp"></p>
             </div>
         </article>
-        <button type="button" class="modalButton" data-toggle="modal" data-target="#exampleModalCenter" id="modalButton">
-            <svg id="icon" width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-bar-chart-line" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path id="iconPath" fill-rule="evenodd" d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5h-2v12h2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/></svg>
-          </button>
     </section>
 
     <div id="mapid"></div>
@@ -65,44 +59,7 @@
             </div>
         </article>
     </section>
-    <footer>
-        <h3>Created @2020 using ES6, jQuery 3.5, PHP 7, Bootstrap 4, NodeJs 13, Webpack 4, Babbel 7<button type="button" class="resourcesButton" data-toggle="modal" data-target="#resourcesModal" id="modalButton">used Resources</button>
-    </footer>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-body">
-                <article id="coronaContainer">
-                    <h2>Coronavirus cases</h2>
-                    <canvas id="myChart"></canvas>
-                </article>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="resourcesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-body">
-                <article id="resourcesContainer">
-                    <a href="#">
-                        <h2>Restcountries.EU</h2>
-                    </a>
-                    <a href="#">
-                        <h2>WeatherBit.io</h2>
-                    </a>
-                    <a href="#">
-                        <h2>Covid19api.com</h2>
-                    </a>
-                    <a href="#">
-                        <h2>Stadiamaps.com</h2>
-                    </a>
-                </article>
-            </div>
-        </div>
-    </div>
-
-    <script src="/dist/main.js"></script>
+    <script src="src/js/scripts.js"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
 </body>

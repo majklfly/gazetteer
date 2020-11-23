@@ -8,6 +8,7 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    height: 10vh;
 }
 
 #countryTitle {
@@ -36,8 +37,8 @@ header {
 }
 
 #mapid {
-    height: 60vw;
-    width: 90vw;
+    height: 90vh;
+    width: 100vw;
     margin-left: 50%;
     transform: translateX(-50%);
     margin-top: 3%;
@@ -143,30 +144,6 @@ header {
     z-index: 1;
 }
 
-#coronaContainer {
-    border: 3px solid darkgray;
-    border-radius: 10px;
-    margin-top: 1%;
-    width: 45%;
-    min-width: 300px;
-    min-height: 200px;
-    font-family: 'Montserrat', sans-serif;
-    background-color: #968a86;
-    text-align: center;
-    padding: 1.5%;
-    margin-top: 20%;
-    margin-left: 50%;
-    transform: translate(-50%);
-    width: 50vw;
-    height: 30vw;
-}
-
-#coronaContainer>h2 {
-    font-size: 1vw;
-    padding-top: 5px;
-    text-align: center;
-}
-
 #modulesSection {
     display: flex;
     flex-wrap: wrap;
@@ -175,31 +152,6 @@ header {
     max-width: 1000px;
     margin-left: 50%;
     transform: translateX(-50%);
-}
-
-#myChart {
-    width: 90%;
-}
-
-#resourcesContainer>a {
-    color: white;
-}
-
-.resourcesButton {
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: transparent;
-    margin-left: 1%;
-}
-
-footer {
-    background-color: darkgray;
-    margin-top: 10%;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
 }
 
 #loadingContainer {
@@ -213,34 +165,10 @@ footer {
     flex-direction: column;
 }
 
-#errorMessage {
-    text-align: center;
-    width: 90vw;
-    padding-top: 10%;
-    padding-left: 5vw;
-    font-weight: bold;
-    font-size: 3.5vw;
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-}
-
-#londonButton {
-    display: block;
-    margin-left: 52%;
-    transform: translateX(-50%);
-    margin-top: 5vh;
-    font-size: 2.5vw;
-}
-
 .loadingAnimation {
     margin-left: 50%;
     margin-top: 20%;
     transform: translate(-50%, -50%);
-}
-
-footer>h3 {
-    font-size: clamp(5px, 4vw, 20px);
-    font-family: 'Montserrat', sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -265,6 +193,7 @@ footer>h3 {
         justify-content: center;
         align-items: center;
         padding-top: 3%;
+        height: 20vh;
     }
     #seachInputContainer {
         width: 90%;
@@ -272,5 +201,8 @@ footer>h3 {
     }
     #buttonsContainer {
         top: 35vw;
+    }
+    #mapid {
+        height: 80vw;
     }
 }
