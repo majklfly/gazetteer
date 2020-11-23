@@ -7,15 +7,18 @@ let countryName;
 let capitalCity;
 let map;
 let border;
+let marker;
 
 // gets the capital city of the country and adds a marker on the map
 const getCapitalCity = () => {
+    const capitalRaw = capitalCity;
+    const capitalNoSpace = capitalCity.replace(" ", "");
     $.ajax({
         url: "src/php/capitalCityDetails.php",
         type: "GET",
         dataType: "json",
         data: {
-            capitalCity: capitalCity,
+            capitalCity: capitalNoSpace,
             countryCode: countryCode2,
             apiKey: "1856257054eb4dd4a53ffbdc7327374d",
         },
@@ -36,7 +39,11 @@ const getCapitalCity = () => {
                 popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
             });
 
-            L.marker([result.data.lat, result.data.lon], {
+            if (typeof marker !== "undefined") {
+                map.removeLayer(marker);
+            }
+
+            marker = L.marker([result.data.lat, result.data.lon], {
                     icon: greenIcon,
                 })
                 .addTo(map)
@@ -114,13 +121,11 @@ const renderMap = () => {
 
 //fetch data for the gallery and renders it
 const photoGallery = () => {
-    var unsplash = new UnsplashPhoto();
-
-    const result = unsplash.all().of([capitalCity]).fetch();
-    const result2 = unsplash.all().of([capitalCity]).fetch();
-
-    console.log("result", result);
-    console.log("result2", result2);
+    // var unsplash = new UnsplashPhoto();
+    // const result = unsplash.all().of([capitalCity]).fetch();
+    // const result2 = unsplash.all().of([capitalCity]).fetch();
+    // console.log("result", result);
+    // console.log("result2", result2);
 };
 
 // gets user's IP address and retrieves initial data back + calls all need function
