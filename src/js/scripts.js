@@ -114,11 +114,13 @@ const countryPolygon = () => {
 
 // renders the leaflet map
 const renderMap = () => {
-    map = L.map("mapid").setView([latitude, longitude], 6);
+    map = L.map("mapid").setView([latitude, longitude], 6).fitWorld();
 
     L.tileLayer(
         "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", {
             maxZoom: 15,
+            tileSize: 512,
+            zoomOffset: -1,
         }
     ).addTo(map);
 };
