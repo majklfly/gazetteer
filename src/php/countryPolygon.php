@@ -2,7 +2,7 @@
 
 $executionStartTime = microtime(true);
 
-$countryBorders = json_decode(file_get_contents("countries.geo.json"), true);
+$countryBorders = json_decode(file_get_contents("./countries.geo.json"), true);
 
 $border = null;
 
