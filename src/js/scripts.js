@@ -95,7 +95,7 @@ const countryPolygon = () => {
             $("#loadingContainer").css("display", "none");
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
+            console.log(jqXHR, errorThrown);
         },
     });
 };
