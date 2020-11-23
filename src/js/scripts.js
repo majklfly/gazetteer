@@ -81,18 +81,19 @@ const countryPolygon = () => {
             countryCode3: countryCode3,
         },
         success: function(result) {
-            if (map.hasLayer(border)) {
-                map.removeLayer(border);
-            }
+            console.log(result);
+            // if (map.hasLayer(border)) {
+            //     map.removeLayer(border);
+            // }
 
-            border = L.geoJson(result.data, {
-                color: "#ff7800",
-                weight: 2,
-                opacity: 0.65,
-            }).addTo(map);
+            // border = L.geoJson(result.data, {
+            //     color: "#ff7800",
+            //     weight: 2,
+            //     opacity: 0.65,
+            // }).addTo(map);
 
-            map.flyToBounds(border.getBounds());
-            $("#loadingContainer").css("display", "none");
+            // map.flyToBounds(border.getBounds());
+            // $("#loadingContainer").css("display", "none");
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, errorThrown);
