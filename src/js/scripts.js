@@ -69,7 +69,6 @@ const getWeatherData = () => {
         type: "GET",
         dataType: "json",
         success: function(result) {
-            console.log("weather result", result);
             $("#weatherTitle").html(result.current.condition.text);
             $("#wind").html("Wind: " + result.current.wind_kph + "km/h");
             $("#temp").html("Temp: " + result.current.temp_c + "°C");
@@ -125,15 +124,6 @@ const renderMap = () => {
     ).addTo(map);
 };
 
-//fetch data for the gallery and renders it
-const photoGallery = () => {
-    // var unsplash = new UnsplashPhoto();
-    // const result = unsplash.all().of([capitalCity]).fetch();
-    // const result2 = unsplash.all().of([capitalCity]).fetch();
-    // console.log("result", result);
-    // console.log("result2", result2);
-};
-
 // gets user's IP address and retrieves initial data back + calls all need function
 $.ajax({
     url: "src/php/currentLocation.php",
@@ -155,7 +145,6 @@ $.ajax({
         renderMap();
         getCapitalCity();
         getWeatherData();
-        photoGallery();
         countryPolygon();
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -171,7 +160,6 @@ $.ajax({
     data: {},
     success: function(result) {
         result.data.map((item) => {
-            console.log(item);
             $("#searchInput").append(
                 "<option value=" + item.alpha2Code + " >" + item.name + "</option>"
             );
@@ -201,7 +189,6 @@ $("#searchInput").on("change", function(e) {
             localStorage.setItem("countryCode", result.data.alpha2Code);
             $("#countryTitle").html(result.data.name);
             getCapitalCity();
-            photoGallery();
             countryPolygon();
         },
         error: function(jqXHR, textStatus, errorThrown) {
