@@ -2,7 +2,7 @@
 
 $executionStartTime = microtime(true);
 
-$countryBorders = json_decode(file_get_contents("./countries.geojson"), true);
+$countryBorders = json_decode(file_get_contents("https://gazetteer-travel.herokuapp.com/src/php/countries.geojson"), true);
 
 $border = null;
 
