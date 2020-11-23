@@ -74,7 +74,6 @@ const getWeatherData = () => {
 
 // renders the polygon of the country
 const countryPolygon = () => {
-    console.log(countryCode3);
     $.ajax({
         url: "src/php/countryPolygon.php",
         type: "GET",
@@ -83,7 +82,6 @@ const countryPolygon = () => {
             countryCode3: countryCode3,
         },
         success: function(result) {
-            console.log(result);
             if (map.hasLayer(border)) {
                 map.removeLayer(border);
             }
