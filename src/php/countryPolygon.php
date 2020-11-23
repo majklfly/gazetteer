@@ -1,5 +1,8 @@
 <?php
 
+ini_set('display_errors', 'On');
+error_reporting(E_ALL)
+
 $executionStartTime = microtime(true);
 
 $url = "https://gazetteer-php-server.herokuapp.com/src/countries.geo.json";
