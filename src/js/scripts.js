@@ -138,6 +138,7 @@ $.ajax({
         countryCode2 = result.data.country_code2;
         countryName = result.data.country_name;
         capitalCity = result.data.country_capital;
+        localStorage.setItem("countryCode", result.data.country_code2);
         //gives the title of the country
         $("#countryTitle").html(countryName);
         renderMap();
@@ -185,6 +186,7 @@ $("#searchInput").on("change", function(e) {
             countryCode3 = result.data.alpha3Code;
             countryName = result.data.name;
             capitalCity = result.data.capital;
+            localStorage.setItem("countryCode", result.data.alpha2Code);
             getCapitalCity();
             getWeatherData();
             photoGallery();
