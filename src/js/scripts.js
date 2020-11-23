@@ -77,7 +77,7 @@ const countryPolygon = () => {
     $.ajax({
         url: "src/php/countryPolygon.php",
         type: "GET",
-        dataType: "json",
+        dataType: "jsonp",
         data: {
             countryCode3: countryCode3,
         },
