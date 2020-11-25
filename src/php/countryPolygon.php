@@ -4,7 +4,7 @@ ini_set('memory_limit', '-1');
 
 $executionStartTime = microtime(true);
 
-$countryBorders = json_decode(file_get_contents("countries.geo.json"), true);
+$countryBorders = json_decode(file_get_contents("../data/countries.geo.json"), true);
 
 $border = null;
 

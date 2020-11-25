@@ -9,6 +9,26 @@ let map;
 let border;
 let marker;
 
+window.addEventListener("load", function() {
+    baguetteBox.run(".gallery");
+});
+
+//fetches the pictures and add them to the index.html
+const getPhotos = () => {
+    let i;
+    const capitalRaw = capitalCity;
+    const capitalNoSpace = capitalRaw.replace(" ", "");
+    const photo = new UnsplashPhoto();
+    for (i = 0; i < 10; i++) {
+        const photoUrl = photo.all().of([capitalNoSpace]).fetch();
+        if (photoUrl) {
+            $("#link" + i).attr("href", photoUrl);
+        }
+    }
+
+    console.log("got updated", capitalNoSpace);
+};
+
 // gets the capital city of the country and adds a marker on the map
 const getCapitalCity = () => {
     const capitalRaw = capitalCity;
@@ -54,6 +74,65 @@ const getCapitalCity = () => {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
+        },
+    });
+};
+
+//fetch and renders markups of interesting places on the map
+const getOtherPlaces = () => {
+    const countryNameFixed = countryName.replace(" ", "+");
+    $.ajax({
+        url: "src/php/otherPlaces.php",
+        type: "GET",
+        dataType: "json",
+        data: {
+            countryName: countryNameFixed,
+        },
+        success: function(result) {
+            result.data.map((item) => {
+                if (item.fields.name !== capitalCity) {
+                    const lat = item.geometry.coordinates[1].toString();
+                    const lon = item.geometry.coordinates[0].toString();
+                    // gets the link to the wiki page
+                    $.ajax({
+                        url: "src/php/getWikiData.php",
+                        type: "GET",
+                        dataType: "json",
+                        data: {
+                            cityName: item.fields.name.replace(" ", "_"),
+                        },
+                        success: function(result) {
+                            const popup = L.popup()
+                                .setLatLng([lat, lon])
+                                .setContent(
+                                    "<div class='cityPopup'><h3>" +
+                                    item.fields.name +
+                                    "</h3><a href=" +
+                                    result.data[3][0] +
+                                    ">Get more info...</a></div>"
+                                );
+                            const Icon = L.icon({
+                                iconUrl: "src/img/marker.png",
+                                iconSize: [32, 32], // size of the icon
+                                iconAnchor: [17, 32], // point of the icon which will correspond to marker's location
+                                popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+                            });
+
+                            marker = L.marker([lat, lon], {
+                                    icon: Icon,
+                                })
+                                .addTo(map)
+                                .bindPopup(popup);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, errorThrown);
+                        },
+                    });
+                }
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, errorThrown);
         },
     });
 };
@@ -144,7 +223,9 @@ $.ajax({
         $("#countryTitle").html(result.data.country_name);
         renderMap();
         getCapitalCity();
+        getOtherPlaces();
         getWeatherData();
+        getPhotos();
         countryPolygon();
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -188,7 +269,12 @@ $("#searchInput").on("change", function(e) {
             capitalCity = result.data.capital;
             localStorage.setItem("countryCode", result.data.alpha2Code);
             $("#countryTitle").html(result.data.name);
+            if (typeof marker !== "undefined") {
+                map.removeLayer(marker);
+            }
             getCapitalCity();
+            getOtherPlaces();
+            getPhotos();
             countryPolygon();
         },
         error: function(jqXHR, textStatus, errorThrown) {

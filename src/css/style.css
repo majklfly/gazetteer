@@ -20,46 +20,27 @@ header {
 }
 
 #seachInputContainer {
-    width: 40%;
+    width: 30%;
     padding-top: 3vh;
-    padding-right: 10%;
+    padding-right: 1%;
 }
 
 #searchInput {
     height: 5vh;
     max-height: 50px;
-    box-shadow: 0px 0px 100px darkgray;
     text-align: center;
-}
-
-#searchInput::placeholder {
-    text-align: center;
-    color: darkgray;
-    font-family: 'Montserrat', sans-serif;
 }
 
 #mapid {
-    height: 80vh !important;
+    height: 86vh !important;
     width: 100vw;
-    margin-left: 50%;
-    transform: translateX(-50%);
     margin-top: 3%;
-    border-radius: 10px;
-}
-
-#buttonsContainer {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    right: 10vw;
-    top: 20vw;
+    z-index: 1;
 }
 
 .leaflet-popup-content-wrapper {
-    width: 50vw;
     margin-right: 30vw;
     max-width: 1000px;
-    height: 50vh;
     background-color: #968a86;
 }
 
@@ -68,18 +49,38 @@ header {
 }
 
 .leaflet-popup-content {
-    width: 45vw !important;
-    height: 45vh !important;
+    width: max-content;
+    height: max-content;
     position: relative;
 }
 
-.modalButton {
+.cityPopup {
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.cityPopup>h3 {
+    font-size: clamp(1rem, 2vw, 2rem);
+}
+
+#buttonsContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: 10vw;
+    top: 20vw;
+    max-height: 400px;
+}
+
+#weatherContainer {
     border-radius: 100%;
+    max-width: 200px;
+    max-height: 200px;
     width: 15vw;
     height: 15vw;
     font-family: 'Montserrat', sans-serif;
-    font-size: 2vw;
-    border: none;
     background-color: #968a86;
     z-index: 5;
     display: flex;
@@ -89,21 +90,18 @@ header {
     box-shadow: 0px 0px 10px 10px#968a86;
 }
 
-.modalButton:hover {
-    box-shadow: 0px 0px 20px 20px#968a86;
-}
-
-#weatherContainer {
+.gallery {
     border-radius: 100%;
+    max-width: 200px;
+    max-height: 200px;
+    margin-top: 10%;
     width: 15vw;
     height: 15vw;
-    font-family: 'Montserrat', sans-serif;
     background-color: #968a86;
     z-index: 5;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     box-shadow: 0px 0px 10px 10px#968a86;
 }
 
@@ -133,7 +131,7 @@ header {
 }
 
 #weatherDetails>p {
-    font-size: 1.6vw;
+    font-size: clamp(0.1rem, 1.6vw, 1.4rem);
 }
 
 #weatherPicture {
@@ -205,6 +203,6 @@ header {
         top: 35vw;
     }
     #mapid {
-        height: 80vw;
+        height: 77vh !important;
     }
 }

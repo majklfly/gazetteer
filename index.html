@@ -11,9 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="src/data/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="src/data/leaflet/leaflet.css">
+    <link rel="stylesheet" href="src/data/baguetteBox/baguetteBox.css">
     <link rel="stylesheet" href="src/css/style.css">
     <script src="src/data/jquery.min.js"></script>
     <script src="src/data/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="src/data/unsplash/unsplash-source.js"></script>
     <script src="src/data/leaflet/leaflet.js"></script>
     <title>Gazetteer</title>
 </head>
@@ -23,6 +25,9 @@
         <lottie-player class="loadingAnimation" src="https://assets5.lottiefiles.com/temp/lf20_ssLgHu.json" background="transparent" speed="1" style="width: 30vw; height: 30vw;" loop autoplay></lottie-player>
     </div>
     <header id="header">
+        <a id="link0" href="src/img/loading.gif" data-caption="Image caption">
+            <lottie-player src="src/img/galleryIcon.json" background="transparent" speed="1" style="width: 8vw; height: 8vw;" hover></lottie-player>
+        </a>
         <h1 id="countryTitle">a</h1>
         <div class="input-group mb-3" id="seachInputContainer">
             <select type="text" class="form-control" id="searchInput"></select>
@@ -37,13 +42,30 @@
                 <p id="temp"></p>
             </div>
         </article>
+        <article class="gallery">
+            <a id="link0" href="src/img/loading.gif" data-caption="Image caption">
+                <lottie-player src="src/img/galleryIcon.json" background="transparent" speed="1" style="width: 100%; height: 100%;" hover></lottie-player>
+            </a>
+            <a id="link1" href="src/img/loading.gif"></a>
+            <a id="link2" href="src/img/loading.gif"></a>
+            <a id="link3" href="src/img/loading.gif"></a>
+            <a id="link4" href="src/img/loading.gif"></a>
+            <a id="link5" href="src/img/loading.gif"></a>
+            <a id="link6" href="src/img/loading.gif"></a>
+            <a id="link7" href="src/img/loading.gif"></a>
+            <a id="link8" href="src/img/loading.gif"></a>
+            <a id="link9" href="src/img/loading.gif"></a>
+        </article>
     </section>
 
     <div id="mapid"></div>
 
-    <script src="src/js/scripts.js"></script>
+
+
+    <script src="src/data/baguetteBox/baguetteBox.min.js" async></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+    <script src="src/js/scripts.js"></script>
 </body>
 
 </html>
