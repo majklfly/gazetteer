@@ -9,24 +9,17 @@ let map;
 let border;
 let marker;
 
-window.addEventListener("load", function() {
-    baguetteBox.run(".gallery");
-});
-
 //fetches the pictures and add them to the index.html
 const getPhotos = () => {
+    $(".galleryPicture").remove();
     let i;
-    const capitalRaw = capitalCity;
-    const capitalNoSpace = capitalRaw.replace(" ", "");
+    const nameSanitized = countryName.replace(" ", "");
     const photo = new UnsplashPhoto();
-    for (i = 0; i < 10; i++) {
-        const photoUrl = photo.all().of([capitalNoSpace]).fetch();
-        if (photoUrl) {
-            $("#link" + i).attr("href", photoUrl);
-        }
+    for (i = 0; i < 12; i++) {
+        const photoUrl = photo.all().of([nameSanitized]).fetch();
+        console.log(photoUrl);
+        $("#image" + i).attr("src", photoUrl);
     }
-
-    console.log("got updated", capitalNoSpace);
 };
 
 // gets the capital city of the country and adds a marker on the map
@@ -249,6 +242,20 @@ $.ajax({
     error: function(jqXHR, textStatus, errorThrown) {
         console.log(errorThrown);
     },
+});
+
+//handles the render of gallery and hiding rest of options
+$("#galleryButtonContainer").click(function() {
+    $("#gallery").css("display", "block");
+    $("#mapid").css("display", "none");
+    $("#buttonsContainer").css("display", "none");
+});
+
+//handles the render of the map and hiding rest of options
+$("#mapButtonContainer").click(function() {
+    $("#mapid").css("display", "block");
+    $("#buttonsContainer").css("display", "flex");
+    $("#gallery").css("display", "none");
 });
 
 //react to the search selection and updates the map based upon it
