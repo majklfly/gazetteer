@@ -7,7 +7,7 @@ let countryName;
 let capitalCity;
 let map;
 let border;
-let marker;
+let markers;
 
 //fetches the pictures and add them to the index.html
 const getPhotos = () => {
@@ -17,7 +17,6 @@ const getPhotos = () => {
     const photo = new UnsplashPhoto();
     for (i = 0; i < 12; i++) {
         const photoUrl = photo.all().of([nameSanitized]).fetch();
-        console.log(photoUrl);
         $("#image" + i).attr("src", photoUrl);
     }
 };
@@ -55,15 +54,13 @@ const getCapitalCity = () => {
                 popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
             });
 
-            if (typeof marker !== "undefined") {
-                map.removeLayer(marker);
-            }
-
-            marker = L.marker([result.data.lat, result.data.lon], {
+            const marker = L.marker([result.data.lat, result.data.lon], {
                     icon: greenIcon,
                 })
                 .addTo(map)
                 .bindPopup(popup);
+
+            markers.addLayer(marker);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
@@ -72,8 +69,11 @@ const getCapitalCity = () => {
 };
 
 //fetch and renders markups of interesting places on the map
+
 const getOtherPlaces = () => {
     const countryNameFixed = countryName.replace(" ", "+");
+    var markers = L.markerClusterGroup();
+    markers.clearLayers();
     $.ajax({
         url: "src/php/otherPlaces.php",
         type: "GET",
@@ -95,27 +95,31 @@ const getOtherPlaces = () => {
                             cityName: item.fields.name.replace(" ", "_"),
                         },
                         success: function(result) {
-                            const popup = L.popup()
-                                .setLatLng([lat, lon])
-                                .setContent(
-                                    "<div class='cityPopup'><h3>" +
-                                    item.fields.name +
-                                    "</h3><a href=" +
-                                    result.data[3][0] +
-                                    ">Get more info...</a></div>"
-                                );
-                            const Icon = L.icon({
-                                iconUrl: "src/img/marker.png",
-                                iconSize: [32, 32], // size of the icon
-                                iconAnchor: [17, 32], // point of the icon which will correspond to marker's location
-                                popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
-                            });
+                            if (result.data) {
+                                const popup = L.popup()
+                                    .setLatLng([lat, lon])
+                                    .setContent(
+                                        "<div class='cityPopup'><h3>" +
+                                        item.fields.name +
+                                        "</h3><a href=" +
+                                        result.data[3][0] +
+                                        ">Get more info...</a></div>"
+                                    );
+                                const Icon = L.icon({
+                                    iconUrl: "src/img/marker.png",
+                                    iconSize: [32, 32], // size of the icon
+                                    iconAnchor: [17, 32], // point of the icon which will correspond to marker's location
+                                    popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+                                });
 
-                            marker = L.marker([lat, lon], {
-                                    icon: Icon,
-                                })
-                                .addTo(map)
-                                .bindPopup(popup);
+                                const marker = L.marker([lat, lon], {
+                                        icon: Icon,
+                                    })
+                                    .addTo(map)
+                                    .bindPopup(popup);
+
+                                markers.addLayer(marker);
+                            }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.log(jqXHR, errorThrown);
@@ -189,12 +193,218 @@ const renderMap = () => {
 
     L.tileLayer(
         "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", {
-            maxZoom: 15,
-            tileSize: 512,
-            zoomOffset: -1,
+            maxZoom: 19,
         }
     ).addTo(map);
+
+    markers = L.markerClusterGroup();
 };
+
+//react to the search selection and updates the map based upon it
+$("#searchInput").on("change", function(e) {
+    map.eachLayer((layer) => {
+        if (layer.dragging) {
+            layer.remove();
+        }
+    });
+    const currentValue = $("#searchInput").val();
+    $.ajax({
+        url: "src/php/getCountryDetails.php",
+        type: "GET",
+        dataType: "json",
+        data: {
+            countryCode: currentValue,
+        },
+        success: function(result) {
+            $("#loadingContainer").css("display", "block");
+            $("#mapid").css("display", "flex");
+            $("#buttonsContainer").css("display", "flex");
+            $("#gallery").css("display", "none");
+            countryCode2 = result.data.alpha2Code;
+            countryCode3 = result.data.alpha3Code;
+            countryName = result.data.name;
+            capitalCity = result.data.capital;
+            localStorage.setItem("countryCode", result.data.alpha2Code);
+            $("#countryTitle").html(result.data.name);
+            if (typeof marker !== "undefined") {
+                map.removeLayer(marker);
+            }
+            getCapitalCity();
+            getOtherPlaces();
+            getPhotos();
+            countryPolygon();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        },
+    });
+});
+
+// ---- CHARTJS CONVERTER LOGIC ------
+
+const formatCurrentDate = () => {
+    const d = new Date();
+    const currentDate =
+        d.getFullYear().toString() +
+        "-" +
+        (d.getMonth() + 1).toString() +
+        "-" +
+        d.getDate().toString();
+    return currentDate;
+};
+
+const calculateMonthAgo = () => {
+    var d = new Date();
+    const priorDate =
+        d.getFullYear().toString() +
+        "-" +
+        d.getMonth().toString() +
+        "-" +
+        d.getDate().toString();
+    return priorDate;
+};
+
+let data = [];
+let labels = [];
+console.log("labels", labels);
+
+const getCurrencyHistory = (symbols, base) => {
+    const end = formatCurrentDate();
+    const start = calculateMonthAgo();
+
+    $.ajax({
+        url: "src/php/getCurrencyHistory.php",
+        type: "GET",
+        dataType: "json",
+        data: {
+            symbols: symbols,
+            base: base,
+            start: start,
+            end: end,
+        },
+        success: function(result) {
+            data = [];
+            labels = [];
+            for (const [key, value] of Object.entries(result.data.rates)) {
+                const valueSanitized = parseFloat(value[symbols]).toFixed(4);
+                data.push(valueSanitized);
+                labels.push(key);
+                renderGraph();
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        },
+    });
+};
+
+const renderGraph = () => {
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels.sort(),
+            datasets: [{
+                label: "Rate",
+                data: data.sort(),
+                backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+                borderColor: ["rgba(255, 99, 132, 1)"],
+                borderWidth: 1,
+            }, ],
+        },
+    });
+};
+
+// ---- CURRENCY CONVERTER LOGIC ------
+
+let baseCurrency = "GBP";
+let baseNumber = 1;
+let targetCurrency = "CAD";
+let targetNumber;
+
+const currencyConverter = (
+    baseCurrency,
+    baseNumber,
+    targetCurrency,
+    targetNumber
+) => {
+    $.ajax({
+        url: "src/php/getCurrencyDetail.php",
+        type: "GET",
+        dataType: "json",
+        data: {
+            baseCurrency: baseCurrency,
+            targetCurrency: targetCurrency,
+        },
+        success: function(result) {
+            const rateValue = result.data.rates[targetCurrency];
+            const updatedTargetValue = baseNumber * rateValue;
+            $("#targetNumber").val(updatedTargetValue);
+            getCurrencyHistory(targetCurrency, baseCurrency);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        },
+    });
+};
+
+const reversedCurrencyConverter = (
+    baseCurrency,
+    baseNumber,
+    targetCurrency,
+    targetNumber
+) => {
+    $.ajax({
+        url: "src/php/getCurrencyDetail.php",
+        type: "GET",
+        dataType: "json",
+        data: {
+            baseCurrency: targetCurrency,
+            targetCurrency: baseCurrency,
+        },
+        success: function(result) {
+            const rateValue = result.data.rates[baseCurrency];
+            const updatedBaseValue = targetNumber * rateValue;
+            $("#baseNumber").val(updatedBaseValue);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        },
+    });
+};
+
+//listeners for the money converter
+$("#baseNumber").on("change", function() {
+    baseNumber = $(this).val();
+    currencyConverter(baseCurrency, baseNumber, targetCurrency, targetNumber);
+});
+
+$("#baseCurrency").on("change", function() {
+    baseCurrency = $(this).val();
+    currencyConverter(baseCurrency, baseNumber, targetCurrency, targetNumber);
+});
+
+$("#targetNumber").on("change", function() {
+    targetNumber = $(this).val();
+    reversedCurrencyConverter(
+        baseCurrency,
+        baseNumber,
+        targetCurrency,
+        targetNumber
+    );
+});
+
+$("#targetCurrency").on("change", function() {
+    targetCurrency = $(this).val();
+    currencyConverter(baseCurrency, baseNumber, targetCurrency, targetNumber);
+});
+
+// ---- ON LOAD FUNCTIONS ------
+
+// listener which closes the hamburger after a click
+$(".navbar-nav>div").on("click", function() {
+    $(".navbar-collapse").collapse("hide");
+});
 
 // gets user's IP address and retrieves initial data back + calls all need function
 $.ajax({
@@ -220,6 +430,25 @@ $.ajax({
         getWeatherData();
         getPhotos();
         countryPolygon();
+        currencyConverter(baseCurrency, baseNumber, targetCurrency, targetNumber);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+        console.log(errorThrown);
+    },
+});
+
+//retrieve all possible currencies
+$.ajax({
+    url: "src/php/retrieveAllCurrencies.php",
+    type: "GET",
+    dataType: "json",
+    data: {},
+    success: function(result) {
+        for (const [key, value] of Object.entries(result.data)) {
+            $(".currencyOptions").append(
+                "<option value=" + key + ">" + key + "</option>"
+            );
+        }
     },
     error: function(jqXHR, textStatus, errorThrown) {
         console.log(errorThrown);
@@ -244,11 +473,14 @@ $.ajax({
     },
 });
 
+// ---- NAVIGATOR ------
+
 //handles the render of gallery and hiding rest of options
 $("#galleryButtonContainer").click(function() {
     $("#gallery").css("display", "block");
     $("#mapid").css("display", "none");
     $("#buttonsContainer").css("display", "none");
+    $("#exchange").css("display", "none");
 });
 
 //handles the render of the map and hiding rest of options
@@ -256,36 +488,13 @@ $("#mapButtonContainer").click(function() {
     $("#mapid").css("display", "block");
     $("#buttonsContainer").css("display", "flex");
     $("#gallery").css("display", "none");
+    $("#exchange").css("display", "none");
 });
 
-//react to the search selection and updates the map based upon it
-$("#searchInput").on("change", function(e) {
-    $("#loadingContainer").css("display", "block");
-    const currentValue = $("#searchInput").val();
-    $.ajax({
-        url: "src/php/getCountryDetails.php",
-        type: "GET",
-        dataType: "json",
-        data: {
-            countryCode: currentValue,
-        },
-        success: function(result) {
-            countryCode2 = result.data.alpha2Code;
-            countryCode3 = result.data.alpha3Code;
-            countryName = result.data.name;
-            capitalCity = result.data.capital;
-            localStorage.setItem("countryCode", result.data.alpha2Code);
-            $("#countryTitle").html(result.data.name);
-            if (typeof marker !== "undefined") {
-                map.removeLayer(marker);
-            }
-            getCapitalCity();
-            getOtherPlaces();
-            getPhotos();
-            countryPolygon();
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
-        },
-    });
+//handles the render of the map and hiding rest of options
+$("#exchangeButtonContainer").click(function() {
+    $("#exchange").css("display", "flex");
+    $("#mapid").css("display", "none");
+    $("#buttonsContainer").css("display", "none");
+    $("#gallery").css("display", "none");
 });

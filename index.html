@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="src/data/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="src/data/leaflet/leaflet.css">
-    <link rel="stylesheet" href="src/data/baguetteBox/baguetteBox.css">
+    <link rel="stylesheet" href="src/data/chartjs/Chart.css">
     <link rel="stylesheet" href="src/css/style.css">
     <title>Gazetteer</title>
 </head>
@@ -27,6 +27,10 @@
               </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
+                    <div id="exchangeButtonContainer" class="menuItem">
+                        <lottie-player id="exchangeButton" class="menuIcon" src="src/img/moneyExchangeIcon.json" background="transparent" speed="1" hover></lottie-player>
+                        <h3>Exchange</h3>
+                    </div>
                     <div id="galleryButtonContainer" class="menuItem">
                         <lottie-player id="galleryButton" class="menuIcon" src="src/img/galleryIcon.json" background="transparent" speed="1" hover></lottie-player>
                         <h3>Gallery</h3>
@@ -79,13 +83,29 @@
         </div>
     </div>
 
+    <div id="exchange">
+        <div class="exchangeRow">
+            <div class="input-group">
+                <select id="baseCurrency" type="text" class="form-control currencyOptions"><option value="GBP">GBP</option></select>
+                <input id="baseNumber" type="" class="form-control" value="1">
+            </div>
+            <div class="input-group">
+                <select id="targetCurrency" class="form-control currencyOptions"></select>
+                <input id="targetNumber" type="text" class="form-control">
+            </div>
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
 
     <script src="src/data/jquery.min.js"></script>
     <script src="src/data/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="src/data/unsplash/unsplash-source.js"></script>
     <script src="src/data/leaflet/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+    <script src="src/data/chartjs/Chart.js"></script>
     <script src="src/js/scripts.js"></script>
 </body>
 
