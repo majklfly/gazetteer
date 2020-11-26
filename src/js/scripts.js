@@ -35,32 +35,34 @@ const getCapitalCity = () => {
             apiKey: "1856257054eb4dd4a53ffbdc7327374d",
         },
         success: function(result) {
-            latitude = result.data.lat;
-            longitude = result.data.lon;
-            getWeatherData();
-            var popup = L.popup()
-                .setLatLng([result.data.lat, result.data.lon])
-                .setContent(
-                    "<object id='iframePopup' data='src/html/popupContent.html' style='border:none' width='100%' height='100%'></object>"
-                );
-            var greenIcon = L.icon({
-                iconUrl: "src/img/leaf-green.png",
-                shadowUrl: "src/img/leaf-shadow.png",
+            if (result.data) {
+                latitude = result.data.lat;
+                longitude = result.data.lon;
+                getWeatherData();
+                var popup = L.popup()
+                    .setLatLng([result.data.lat, result.data.lon])
+                    .setContent(
+                        "<object id='iframePopup' data='src/html/popupContent.html' style='border:none' width='100%' height='100%'></object>"
+                    );
+                var greenIcon = L.icon({
+                    iconUrl: "src/img/leaf-green.png",
+                    shadowUrl: "src/img/leaf-shadow.png",
 
-                iconSize: [19, 47], // size of the icon
-                shadowSize: [25, 32], // size of the shadow
-                iconAnchor: [11, 47], // point of the icon which will correspond to marker's location
-                shadowAnchor: [2, 31], // the same for the shadow
-                popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
-            });
+                    iconSize: [19, 47], // size of the icon
+                    shadowSize: [25, 32], // size of the shadow
+                    iconAnchor: [11, 47], // point of the icon which will correspond to marker's location
+                    shadowAnchor: [2, 31], // the same for the shadow
+                    popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+                });
 
-            const marker = L.marker([result.data.lat, result.data.lon], {
-                    icon: greenIcon,
-                })
-                .addTo(map)
-                .bindPopup(popup);
+                const marker = L.marker([result.data.lat, result.data.lon], {
+                        icon: greenIcon,
+                    })
+                    .addTo(map)
+                    .bindPopup(popup);
 
-            markers.addLayer(marker);
+                markers.addLayer(marker);
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
@@ -266,7 +268,6 @@ const calculateMonthAgo = () => {
 
 let data = [];
 let labels = [];
-console.log("labels", labels);
 
 const getCurrencyHistory = (symbols, base) => {
     const end = formatCurrentDate();
