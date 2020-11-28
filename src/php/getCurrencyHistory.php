@@ -2,7 +2,9 @@
 
 $executionStartTime = microtime(true) / 1000;
 
-$url = "https://api.exchangeratesapi.io/history?symbols=" . $_REQUEST['symbols'] . "&base=" . $_REQUEST['base'] . "&start_at=" . $_REQUEST['start'] . "&end_at=" . $_REQUEST['end'];
+$url = "https://free.currconv.com/api/v7/convert?apiKey=786adf7939bbf2bc8453&q=". $_REQUEST['base'] . "_" . $_REQUEST['symbols'] . "&compact=ultra&date=" . $_REQUEST['start'] . "&endDate=" . $_REQUEST['end'];
+
+https://free.currconv.com/api/v7/convert?apiKey=786adf7939bbf2bc8453&q=GBP_CZK&compact=ultra&date=2020-08-21&endDate=2020-08-26
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

@@ -201,10 +201,17 @@
         transform: translate(-50%, -50%);
     }
     
+    #exchangeDialog {
+        display: flex;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
     #exchange {
         width: 80vw;
-        height: 200% !important;
-        max-height: 80vw;
+        height: auto !important;
+        padding: 15px;
+        max-height: 600px;
         background-color: #555;
         border-radius: 15px;
         display: flex;
@@ -227,7 +234,7 @@
         height: 80%;
         width: 90%;
     }
-
+    
     .contentRow {
         display: flex;
         flex-direction: column;
@@ -236,13 +243,13 @@
         color: whitesmoke;
         justify-content: flex-start;
     }
-
+    
     #countryInfoDialog {
         display: flex;
         align-items: center !important;
         justify-content: center !important;
     }
-
+    
     #countryInfo {
         font-family: 'Montserrat', sans-serif;
         background-color: #555;
@@ -250,7 +257,6 @@
         height: 70vh;
         padding: 10%;
         overflow: scroll;
-
     }
     
     #flag {

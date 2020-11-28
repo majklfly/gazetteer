@@ -349,7 +349,7 @@ const getCountryInfo = () => {
                 (language) =>
                 (languages += `code: ${language.iso639_2}, name: ${language.name}, native name: ${language.nativeName} </br>`)
             );
-            console.log('countryInfo', result)
+            console.log("countryInfo", result);
             $("#capitalCity").html(result.data.capital);
             $("#subregion").html(result.data.subregion);
             $("#population").html(result.data.population);
@@ -363,8 +363,8 @@ const getCountryInfo = () => {
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
         },
-    })
-}
+    });
+};
 
 //react to the search selection and updates the map based upon it
 $("#searchInput").on("change", function(e) {
@@ -394,7 +394,7 @@ $("#searchInput").on("change", function(e) {
             getCapitalCity();
             getPhotos();
             countryPolygon();
-            getCountryInfo()
+            getCountryInfo();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
@@ -415,15 +415,15 @@ const formatCurrentDate = () => {
     return currentDate;
 };
 
-const calculateMonthAgo = () => {
-    var d = new Date();
-    const priorDate =
-        d.getFullYear().toString() +
+const calculateEightDaysAgo = () => {
+    var today = new Date();
+    var lastWeek =
+        today.getFullYear().toString() +
         "-" +
-        d.getMonth().toString() +
+        (today.getMonth() + 1).toString() +
         "-" +
-        d.getDate().toString();
-    return priorDate;
+        (today.getDate() - 7).toString();
+    return lastWeek;
 };
 
 let data = [];
@@ -432,7 +432,7 @@ let labels = [];
 // get data for the graph for currencies
 const getCurrencyHistory = (symbols, base) => {
     const end = formatCurrentDate();
-    const start = calculateMonthAgo();
+    const start = calculateEightDaysAgo();
 
     $.ajax({
         url: "src/php/getCurrencyHistory.php",
@@ -447,8 +447,9 @@ const getCurrencyHistory = (symbols, base) => {
         success: function(result) {
             data = [];
             labels = [];
-            for (const [key, value] of Object.entries(result.data.rates)) {
-                const valueSanitized = parseFloat(value[symbols]).toFixed(4);
+            const array = Object.values(result.data);
+            for (const [key, value] of Object.entries(array[0])) {
+                const valueSanitized = parseFloat(value).toFixed(4);
                 data.push(valueSanitized);
                 labels.push(key);
                 renderGraph();
@@ -481,7 +482,7 @@ const renderGraph = () => {
 
 let baseCurrency = "GBP";
 let baseNumber = 1;
-let targetCurrency = "CAD";
+let targetCurrency = "ALL";
 let targetNumber;
 
 const currencyConverter = (
@@ -499,7 +500,8 @@ const currencyConverter = (
             targetCurrency: targetCurrency,
         },
         success: function(result) {
-            const rateValue = result.data.rates[targetCurrency];
+            const values = Object.values(result.data);
+            const rateValue = values[0].val;
             const updatedTargetValue = baseNumber * rateValue;
             $("#targetNumber").val(updatedTargetValue);
             getCurrencyHistory(targetCurrency, baseCurrency);
@@ -525,7 +527,8 @@ const reversedCurrencyConverter = (
             targetCurrency: baseCurrency,
         },
         success: function(result) {
-            const rateValue = result.data.rates[baseCurrency];
+            const values = Object.values(result.data);
+            const rateValue = values[0].val;
             const updatedBaseValue = targetNumber * rateValue;
             $("#baseNumber").val(updatedBaseValue);
         },
@@ -580,7 +583,7 @@ $.ajax({
         getWeatherData();
         getPhotos();
         countryPolygon();
-        getCountryInfo()
+        getCountryInfo();
         currencyConverter(baseCurrency, baseNumber, targetCurrency, targetNumber);
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -597,7 +600,7 @@ $.ajax({
     success: function(result) {
         for (const [key, value] of Object.entries(result.data)) {
             $(".currencyOptions").append(
-                "<option value=" + key + ">" + key + "</option>"
+                "<option value=" + key + ">" + value.currencyName + "</option>"
             );
         }
     },

@@ -2,7 +2,7 @@
 
 $executionStartTime = microtime(true) / 1000;
 
-$url = "https://api.exchangeratesapi.io/latest?symbols=" . $_REQUEST['targetCurrency'] . "&base=" . $_REQUEST['baseCurrency'];
+$url = "https://free.currconv.com/api/v7/convert?apiKey=786adf7939bbf2bc8453&q=" . $_REQUEST['baseCurrency'] . "_" . $_REQUEST['targetCurrency'];
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -14,6 +14,6 @@ $result=curl_exec($ch);
 curl_close($ch);
 
 $decode = json_decode($result,true);	
-$output['data'] = $decode;
+$output['data'] = $decode['results'];
 
 echo json_encode($output); 
