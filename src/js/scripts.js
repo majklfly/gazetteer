@@ -321,12 +321,50 @@ const renderMap = () => {
         "<img src='https://img.icons8.com/color/48/000000/info--v1.png' class='buttonIcon'/>",
         function(btn, map) {
             countryInfoButton = btn;
-            $("#exchangeModal").modal("show");
+            $("#countryInfoModal").modal("show");
         }
     ).addTo(map);
 
     markers = L.markerClusterGroup();
 };
+
+// fetch information about country and updad info modal
+const getCountryInfo = () => {
+    $.ajax({
+        url: "src/php/getCountryDetails.php",
+        type: "GET",
+        dataType: "json",
+        data: {
+            countryCode: countryCode2,
+        },
+        success: function(result) {
+            let currencies = "";
+            result.data.currencies.map(
+                (currency) =>
+                (currencies += ` code: ${currency.code}, name: ${currency.name}, symbol: ${currency.symbol}`)
+            );
+
+            let languages = "";
+            result.data.languages.map(
+                (language) =>
+                (languages += `code: ${language.iso639_2}, name: ${language.name}, native name: ${language.nativeName} </br>`)
+            );
+            console.log('countryInfo', result)
+            $("#capitalCity").html(result.data.capital);
+            $("#subregion").html(result.data.subregion);
+            $("#population").html(result.data.population);
+            $("#fullName").html(result.data.name);
+            $("#currency").html(currencies);
+            $("#languages").html(languages);
+
+            const img = document.getElementById("flag");
+            img.src = result.data.flag;
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        },
+    })
+}
 
 //react to the search selection and updates the map based upon it
 $("#searchInput").on("change", function(e) {
@@ -344,10 +382,6 @@ $("#searchInput").on("change", function(e) {
             countryCode: currentValue,
         },
         success: function(result) {
-            $("#loadingContainer").css("display", "block");
-            $("#mapid").css("display", "flex");
-            $("#buttonsContainer").css("display", "flex");
-            $("#gallery").css("display", "none");
             countryCode2 = result.data.alpha2Code;
             countryCode3 = result.data.alpha3Code;
             countryName = result.data.name;
@@ -360,6 +394,7 @@ $("#searchInput").on("change", function(e) {
             getCapitalCity();
             getPhotos();
             countryPolygon();
+            getCountryInfo()
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
@@ -394,6 +429,7 @@ const calculateMonthAgo = () => {
 let data = [];
 let labels = [];
 
+// get data for the graph for currencies
 const getCurrencyHistory = (symbols, base) => {
     const end = formatCurrentDate();
     const start = calculateMonthAgo();
@@ -527,30 +563,24 @@ $("#targetCurrency").on("change", function() {
 
 // ---- ON LOAD FUNCTIONS ------
 
-// listener which closes the hamburger after a click
-$(".navbar-nav>div").on("click", function() {
-    $(".navbar-collapse").collapse("hide");
-});
-
 // gets user's IP address and retrieves initial data back + calls all need function
 $.ajax({
     url: "https://api.ipgeolocation.io/ipgeo?apiKey=1916b969238f4383b66a16126e6dfb2e",
     type: "GET",
     dataType: "json",
     success: function(result) {
-        console.log(result);
         latitude = result.latitude;
         longitude = result.longitude;
         countryCode3 = result.country_code3;
         countryCode2 = result.country_code2;
         countryName = result.country_name;
         capitalCity = result.country_capital;
-        localStorage.setItem("countryCode", result.country_code2);
         renderMap();
         getCapitalCity();
         getWeatherData();
         getPhotos();
         countryPolygon();
+        getCountryInfo()
         currencyConverter(baseCurrency, baseNumber, targetCurrency, targetNumber);
     },
     error: function(jqXHR, textStatus, errorThrown) {

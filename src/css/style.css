@@ -227,6 +227,44 @@
         height: 80%;
         width: 90%;
     }
+
+    .contentRow {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        font-family: 'Montserrat', sans-serif;
+        color: whitesmoke;
+        justify-content: flex-start;
+    }
+
+    #countryInfoDialog {
+        display: flex;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    #countryInfo {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #555;
+        width: 50vw;
+        height: 70vh;
+        padding: 10%;
+        overflow: scroll;
+
+    }
+    
+    #flag {
+        height: 20%;
+        width: 20%;
+        position: absolute;
+        right: 15%;
+        top: 8%;
+    }
+    
+    .popuplabel {
+        text-decoration: underline;
+        font-size: 0.8rem;
+    }
     
     .input-group {
         padding-top: 5%;
