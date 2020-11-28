@@ -9,8 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Acme&family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="src/data/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="src/data/leaflet/leaflet.css">
+    <link rel="stylesheet" href="src/data/easyButton/easy-button.css">
+    <link rel="stylesheet" href="src/data/markerCluster/dist/MarkerCluster.css">
+    <link rel="stylesheet" href="src/data/markerCluster/dist/MarkerCluster.Default.css">
     <link rel="stylesheet" href="src/data/chartjs/Chart.css">
     <link rel="stylesheet" href="src/css/style.css">
     <title>Gazetteer</title>
@@ -20,80 +24,66 @@
     <div id="loadingContainer">
         <lottie-player class="loadingAnimation" src="https://assets5.lottiefiles.com/temp/lf20_ssLgHu.json" background="transparent" speed="1" style="width: 30vw; height: 30vw;" loop autoplay></lottie-player>
     </div>
-    <header id="header">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <div id="exchangeButtonContainer" class="menuItem">
-                        <lottie-player id="exchangeButton" class="menuIcon" src="src/img/moneyExchangeIcon.json" background="transparent" speed="1" hover></lottie-player>
-                        <h3>Exchange</h3>
-                    </div>
-                    <div id="galleryButtonContainer" class="menuItem">
-                        <lottie-player id="galleryButton" class="menuIcon" src="src/img/galleryIcon.json" background="transparent" speed="1" hover></lottie-player>
-                        <h3>Gallery</h3>
-                    </div>
-                    <div id="mapButtonContainer" class="menuItem">
-                        <lottie-player id="mapButton" class="menuIcon" src="src/img/mapIcon.json" background="transparent" speed="1" hover></lottie-player>
-                        <h3>Map</h3>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <h1 id="countryTitle"></h1>
-        <div class="input-group mb-3" id="seachInputContainer">
-            <select type="text" class="form-control" id="searchInput"></select>
+    <select type="text" class="form-control" id="searchInput"></select>
+
+    <main role="main" id="mapid"></main>
+
+    <div id="weatherContainer">
+        <h3 id="weatherTitle">Weather Container</h3>
+        <div>
+            <h4 id="wind"></h4>
+            <h4 id="temp"></h4>
+            <h4 id="update"></h4>
         </div>
-    </header>
-    <section id="buttonsContainer">
-        <article id="weatherContainer">
-            <h2 id="weatherTitle"></h2>
-            <img id="weatherPicture" alt="weather">
-            <div id="weatherDetails">
-                <p id="wind"></p>
-                <p id="temp"></p>
-            </div>
-        </article>
-    </section>
+        <img id="weatherPicture" src="#" alt="weatherPicture">
+    </div>
 
-    <div id="mapid"></div>
-
-    <div id="gallery" class="container-fluid">
-        <div class="row">
-            <div class="column" id="column1">
-                <img id="image0" src="#" alt="galleryPicture">
-                <img id="image1" src="#" alt="galleryPicture">
-                <img id="image2" src="#" alt="galleryPicture">
-                <img id="image3" src="#" alt="galleryPicture">
-            </div>
-            <div class="column" id="column2">
-                <img id="image4" src="#" alt="galleryPicture">
-                <img id="image5" src="#" alt="galleryPicture">
-                <img id="image6" src="#" alt="galleryPicture">
-                <img id="image7" src="#" alt="galleryPicture">
-            </div>
-            <div class="column" id="column3">
-                <img id="image8" src="#" alt="galleryPicture">
-                <img id="image9" src="#" alt="galleryPicture">
-                <img id="image10" src="#" alt="galleryPicture">
-                <img id="image11" src="#" alt="galleryPicture">
+    <div class="modal fade modal-fullscreen force-fullscreen" id="galleryModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" id="gallery-dialog">
+            <div class="modal-content" id="gallery-content">
+                <div id="carouselExampleIndicators" class="carousel slide carousel-fit" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active"><img id="image0" src="#" class="galleryItem" alt="galleryItem"></div>
+                        <div class="carousel-item"><img id="image1" src="#" class="galleryItem" alt="galleryItem"></div>
+                        <div class="carousel-item"><img id="image2" src="#" class="galleryItem" alt="galleryItem"></div>
+                        <div class="carousel-item"><img id="image3" src="#" class="galleryItem" alt="galleryItem"></div>
+                        <div class="carousel-item"><img id="image4" src="#" class="galleryItem" alt="galleryItem"></div>
+                        <div class="carousel-item"><img id="image5" src="#" class="galleryItem" alt="galleryItem"></div>
+                        <div class="carousel-item"><img id="image6" src="#" class="galleryItem" alt="galleryItem"></div>
+                        <div class="carousel-item"><img id="image7" src="#" class="galleryItem" alt="galleryItem"></div>
+                        <div class="carousel-item"><img id="image8" src="#" class="galleryItem" alt="galleryItem"></div>
+                        <div class="carousel-item"><img id="image9" src="#" class="galleryItem" alt="galleryItem"></div>
+                        <div class="carousel-item"><img id="image10" src="#" class="galleryItem" alt="galleryItem"></div>
+                        <div class="carousel-item"><img id="image11" src="#" class="galleryItem" alt="galleryItem"></div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="exchange">
-        <div class="exchangeRow">
-            <div class="input-group">
-                <select id="baseCurrency" type="text" class="form-control currencyOptions"><option value="GBP">GBP</option></select>
-                <input id="baseNumber" type="" class="form-control" value="1">
+    <div class="modal fade" id="exchangeModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" id="exchange">
+                <div id="exchangeRow">
+                    <div class="input-group">
+                        <select id="baseCurrency" type="text" class="form-control currencyOptions"><option value="GBP">GBP</option></select>
+                        <input id="baseNumber" type="" class="form-control" value="1">
+                    </div>
+                    <div class="input-group">
+                        <select id="targetCurrency" class="form-control currencyOptions"></select>
+                        <input id="targetNumber" type="text" class="form-control">
+                    </div>
+                    <canvas id="myChart"></canvas>
+                </div>
             </div>
-            <div class="input-group">
-                <select id="targetCurrency" class="form-control currencyOptions"></select>
-                <input id="targetNumber" type="text" class="form-control">
-            </div>
-            <canvas id="myChart"></canvas>
         </div>
     </div>
 
@@ -102,7 +92,8 @@
     <script src="src/data/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="src/data/unsplash/unsplash-source.js"></script>
     <script src="src/data/leaflet/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
+    <script src="src/data/easyButton/easy-button.js"></script>
+    <script src="src/data/markerCluster/dist/leaflet.markercluster-src.js"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
     <script src="src/data/chartjs/Chart.js"></script>

@@ -8,6 +8,10 @@ let capitalCity;
 let map;
 let border;
 let markers;
+let weatherBtn;
+let galleryBtn;
+let exchangeButton;
+let countryInfoButton;
 
 //fetches the pictures and add them to the index.html
 const getPhotos = () => {
@@ -35,33 +39,11 @@ const getCapitalCity = () => {
             apiKey: "1856257054eb4dd4a53ffbdc7327374d",
         },
         success: function(result) {
+            console.log("capital", result);
             if (result.data) {
                 latitude = result.data.lat;
                 longitude = result.data.lon;
                 getWeatherData();
-                var popup = L.popup()
-                    .setLatLng([result.data.lat, result.data.lon])
-                    .setContent(
-                        "<object id='iframePopup' data='src/html/popupContent.html' style='border:none' width='100%' height='100%'></object>"
-                    );
-                var greenIcon = L.icon({
-                    iconUrl: "src/img/leaf-green.png",
-                    shadowUrl: "src/img/leaf-shadow.png",
-
-                    iconSize: [19, 47], // size of the icon
-                    shadowSize: [25, 32], // size of the shadow
-                    iconAnchor: [11, 47], // point of the icon which will correspond to marker's location
-                    shadowAnchor: [2, 31], // the same for the shadow
-                    popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
-                });
-
-                const marker = L.marker([result.data.lat, result.data.lon], {
-                        icon: greenIcon,
-                    })
-                    .addTo(map)
-                    .bindPopup(popup);
-
-                markers.addLayer(marker);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -74,7 +56,11 @@ const getCapitalCity = () => {
 
 const getOtherPlaces = () => {
     const countryNameFixed = countryName.replace(" ", "+");
-    var markers = L.markerClusterGroup();
+    var markers = L.markerClusterGroup({
+        iconCreateFunction: function(cluster) {
+            return L.divIcon({ html: "<b>" + cluster.getChildCount() + "</b>" });
+        },
+    });
     markers.clearLayers();
     $.ajax({
         url: "src/php/otherPlaces.php",
@@ -84,51 +70,50 @@ const getOtherPlaces = () => {
             countryName: countryNameFixed,
         },
         success: function(result) {
+            markers = L.markerClusterGroup();
             result.data.map((item) => {
-                if (item.fields.name !== capitalCity) {
-                    const lat = item.geometry.coordinates[1].toString();
-                    const lon = item.geometry.coordinates[0].toString();
-                    // gets the link to the wiki page
-                    $.ajax({
-                        url: "src/php/getWikiData.php",
-                        type: "GET",
-                        dataType: "json",
-                        data: {
-                            cityName: item.fields.name.replace(" ", "_"),
-                        },
-                        success: function(result) {
-                            if (result.data) {
-                                const popup = L.popup()
-                                    .setLatLng([lat, lon])
-                                    .setContent(
-                                        "<div class='cityPopup'><h3>" +
-                                        item.fields.name +
-                                        "</h3><a href=" +
-                                        result.data[3][0] +
-                                        ">Get more info...</a></div>"
-                                    );
-                                const Icon = L.icon({
-                                    iconUrl: "src/img/marker.png",
-                                    iconSize: [32, 32], // size of the icon
-                                    iconAnchor: [17, 32], // point of the icon which will correspond to marker's location
-                                    popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
-                                });
+                const lat = item.geometry.coordinates[1].toString();
+                const lon = item.geometry.coordinates[0].toString();
+                // gets the link to the wiki page
+                $.ajax({
+                    url: "src/php/getWikiData.php",
+                    type: "GET",
+                    dataType: "json",
+                    data: {
+                        cityName: item.fields.name.replace(" ", "_"),
+                    },
+                    success: function(result) {
+                        console.log(result.data);
+                        if (result.data) {
+                            const popup = L.popup()
+                                .setLatLng([lat, lon])
+                                .setContent(
+                                    "<div class='cityPopup'><h3>" +
+                                    item.fields.name +
+                                    "</h3><a href=" +
+                                    result.data[3][0] +
+                                    ">Get more info...</a></div>"
+                                );
+                            const Icon = L.icon({
+                                iconUrl: "src/img/marker.png",
+                                iconSize: [25, 25], // size of the icon
+                                iconAnchor: [17, 32], // point of the icon which will correspond to marker's location
+                                popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+                            });
 
-                                const marker = L.marker([lat, lon], {
-                                        icon: Icon,
-                                    })
-                                    .addTo(map)
-                                    .bindPopup(popup);
+                            const marker = L.marker([lat, lon], {
+                                icon: Icon,
+                            }).bindPopup(popup);
 
-                                markers.addLayer(marker);
-                            }
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.log(jqXHR, errorThrown);
-                        },
-                    });
-                }
+                            markers.addLayer(marker);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR, errorThrown);
+                    },
+                });
             });
+            map.addLayer(markers);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, errorThrown);
@@ -147,12 +132,24 @@ const getWeatherData = () => {
         type: "GET",
         dataType: "json",
         success: function(result) {
+            console.log("weather data", result);
             $("#weatherTitle").html(result.current.condition.text);
-            $("#wind").html("Wind: " + result.current.wind_kph + "km/h");
-            $("#temp").html("Temp: " + result.current.temp_c + "°C");
-            $("#weatherPicture")
-                .attr("src", result.current.condition.icon)
-                .css("width", "100px");
+            $("#wind").html(
+                "Wind: " +
+                result.current.wind_kph +
+                "kph / " +
+                result.current.wind_mph +
+                "mph"
+            );
+            $("#temp").html(
+                "Temp: " +
+                result.current.temp_c +
+                "°C / " +
+                result.current.temp_f +
+                "°F"
+            );
+            $("#update").html("Last Update: " + result.current.last_updated);
+            $("#weatherPicture").attr("src", result.current.condition.icon);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
@@ -189,13 +186,52 @@ const countryPolygon = () => {
     });
 };
 
-// renders the leaflet map
+// renders the leaflet map with buttons on the side
 const renderMap = () => {
     map = L.map("mapid").setView([latitude, longitude], 6).fitWorld();
 
     L.tileLayer(
         "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", {
             maxZoom: 19,
+        }
+    ).addTo(map);
+
+    weatherBtn = L.easyButton({
+        states: [{
+            stateName: "openWeather",
+            icon: "<img src='https://img.icons8.com/color/48/000000/partly-cloudy-day--v1.png' class='buttonIcon'/>",
+            title: "weather",
+            onClick: function(btn, map) {
+                const attrValue = $("#weatherContainer").css("display");
+                attrValue === "block" ?
+                    $("#weatherContainer").css("display", "none") :
+                    $("#weatherContainer").css("display", "block");
+            },
+        }, ],
+    });
+    weatherBtn.addTo(map);
+
+    L.easyButton(
+        "<img src='https://img.icons8.com/color/48/000000/gallery.png' class='buttonIcon' />",
+        function(btn, map) {
+            galleryBtn = btn;
+            $("#galleryModal").modal("show");
+        }
+    ).addTo(map);
+
+    L.easyButton(
+        "<img src='https://img.icons8.com/color/48/000000/banknotes.png' class='buttonIcon' />",
+        function(btn, map) {
+            exchangeBtn = btn;
+            $("#exchangeModal").modal("show");
+        }
+    ).addTo(map);
+
+    L.easyButton(
+        "<img src='https://img.icons8.com/color/48/000000/info--v1.png' class='buttonIcon'/>",
+        function(btn, map) {
+            countryInfoButton = btn;
+            $("#exchangeModal").modal("show");
         }
     ).addTo(map);
 
@@ -472,30 +508,4 @@ $.ajax({
     error: function(jqXHR, textStatus, errorThrown) {
         console.log(errorThrown);
     },
-});
-
-// ---- NAVIGATOR ------
-
-//handles the render of gallery and hiding rest of options
-$("#galleryButtonContainer").click(function() {
-    $("#gallery").css("display", "block");
-    $("#mapid").css("display", "none");
-    $("#buttonsContainer").css("display", "none");
-    $("#exchange").css("display", "none");
-});
-
-//handles the render of the map and hiding rest of options
-$("#mapButtonContainer").click(function() {
-    $("#mapid").css("display", "block");
-    $("#buttonsContainer").css("display", "flex");
-    $("#gallery").css("display", "none");
-    $("#exchange").css("display", "none");
-});
-
-//handles the render of the map and hiding rest of options
-$("#exchangeButtonContainer").click(function() {
-    $("#exchange").css("display", "flex");
-    $("#mapid").css("display", "none");
-    $("#buttonsContainer").css("display", "none");
-    $("#gallery").css("display", "none");
 });
