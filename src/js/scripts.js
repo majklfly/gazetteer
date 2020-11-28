@@ -45,7 +45,6 @@ const getCapitalCity = () => {
             apiKey: "1856257054eb4dd4a53ffbdc7327374d",
         },
         success: function(result) {
-            console.log("capital", result);
             if (result.data) {
                 latitude = result.data.lat;
                 longitude = result.data.lon;
@@ -535,22 +534,18 @@ $(".navbar-nav>div").on("click", function() {
 
 // gets user's IP address and retrieves initial data back + calls all need function
 $.ajax({
-    url: "src/php/currentLocation.php",
+    url: "https://api.ipgeolocation.io/ipgeo?apiKey=1916b969238f4383b66a16126e6dfb2e",
     type: "GET",
     dataType: "json",
-    data: {
-        key: "1916b969238f4383b66a16126e6dfb2e",
-    },
     success: function(result) {
-        latitude = result.data.latitude;
-        longitude = result.data.longitude;
-        countryCode3 = result.data.country_code3;
-        countryCode2 = result.data.country_code2;
-        countryName = result.data.country_name;
-        capitalCity = result.data.country_capital;
-        localStorage.setItem("countryCode", result.data.country_code2);
-        //gives the title of the country
-        $("#countryTitle").html(result.data.country_name);
+        console.log(result);
+        latitude = result.latitude;
+        longitude = result.longitude;
+        countryCode3 = result.country_code3;
+        countryCode2 = result.country_code2;
+        countryName = result.country_name;
+        capitalCity = result.country_capital;
+        localStorage.setItem("countryCode", result.country_code2);
         renderMap();
         getCapitalCity();
         getWeatherData();
