@@ -79,6 +79,7 @@
     #weatherContainer>div {
         display: flex;
         flex-direction: row;
+        position: relative;
     }
     
     #weatherInfoContainer {
@@ -86,23 +87,33 @@
         flex-wrap: wrap;
         justify-content: space-evenly;
         width: 60%;
+        margin-left: 30%;
         height: 100%;
     }
     
     #weatherSunContainer {
         width: 30%;
         height: 100%;
+        position: absolute;
+        top: -20%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        border: 2px solid lightgray;
+        border-radius: 10px;
     }
     
     #weatherSunContainer>div {
         display: flex;
         flex-direction: row;
+        justify-content: space-evenly;
         align-items: center;
     }
     
     #weatherSunContainer img {
+        opacity: 0.8;
         width: 30%;
-        opacity: 0.5;
         height: auto;
     }
     
@@ -130,7 +141,10 @@
     }
     
     .leaflet-top {
-        margin-top: 10%;
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
     }
     
     .leaflet-bar {

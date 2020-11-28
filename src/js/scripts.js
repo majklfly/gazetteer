@@ -12,12 +12,15 @@ let cityMarkers;
 let religionMarkers;
 let monumetsMarkers;
 let naturalMarkers;
-let industrialMarkers;
 let architectureMarkers;
 let weatherBtn;
 let galleryBtn;
 let exchangeButton;
 let countryInfoButton;
+let religionButton;
+let bridgesButton;
+let cavesButton;
+let palacesButton;
 
 //fetches the pictures and add them to the index.html
 const getPhotos = () => {
@@ -280,6 +283,11 @@ const countryPolygon = () => {
 const renderMap = () => {
     map = L.map("mapid").setView([latitude, longitude], 6).fitWorld();
 
+    let palaceSwitch = false;
+    let bridgesSwitch = false;
+    let cavesSwitch = false;
+    let churchSwitch = false;
+
     L.tileLayer(
         "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", {
             maxZoom: 19,
@@ -325,6 +333,58 @@ const renderMap = () => {
         }
     ).addTo(map);
 
+    L.easyButton(
+        "<img src='src/img/palace.png' class='buttonIcon'/>",
+        function(btn, map) {
+            if (palaceSwitch === true) {
+                map.addLayer(monumetsMarkers);
+                palaceSwitch = false;
+            } else {
+                map.removeLayer(monumetsMarkers);
+                palaceSwitch = true;
+            }
+        }
+    ).addTo(map);
+
+    L.easyButton(
+        "<img src='src/img/bridge.png' class='buttonIcon'/>",
+        function(btn, map) {
+            if (bridgesSwitch === true) {
+                map.addLayer(architectureMarkers);
+                bridgesSwitch = false;
+            } else {
+                map.removeLayer(architectureMarkers);
+                bridgesSwitch = true;
+            }
+        }
+    ).addTo(map);
+
+    L.easyButton(
+        "<img src='src/img/cave.png' class='buttonIcon'/>",
+        function(btn, map) {
+            if (cavesSwitch === true) {
+                map.addLayer(naturalMarkers);
+                cavesSwitch = false;
+            } else {
+                map.removeLayer(naturalMarkers);
+                cavesSwitch = true;
+            }
+        }
+    ).addTo(map);
+
+    L.easyButton(
+        "<img src='src/img/church.png' class='buttonIcon'/>",
+        function(btn, map) {
+            if (churchSwitch === true) {
+                map.addLayer(religionMarkers);
+                churchSwitch = false;
+            } else {
+                map.removeLayer(religionMarkers);
+                churchSwitch = true;
+            }
+        }
+    ).addTo(map);
+
     markers = L.markerClusterGroup();
 };
 
@@ -349,7 +409,6 @@ const getCountryInfo = () => {
                 (language) =>
                 (languages += `code: ${language.iso639_2}, name: ${language.name}, native name: ${language.nativeName} </br>`)
             );
-            console.log("countryInfo", result);
             $("#capitalCity").html(result.data.capital);
             $("#subregion").html(result.data.subregion);
             $("#population").html(result.data.population);
