@@ -31,10 +31,24 @@
     <div id="weatherContainer">
         <h3 id="weatherTitle">Weather Container</h3>
         <div>
-            <h4 id="wind"></h4>
-            <h4 id="temp"></h4>
-            <h4 id="update"></h4>
+            <div id="weatherSunContainer">
+                <div>
+                    <img src="src/img/sunrise.png" alt="sunrise">
+                    <h4 id="sunrise"></h4>
+                </div>
+                <div>
+                    <img src="src/img/sunset.png" alt="sunrise">
+                    <h4 id="sunset"></h4>
+                </div>
+
+            </div>
+            <div id="weatherInfoContainer">
+                <h4 id="wind"></h4>
+                <h4 id="temp"></h4>
+                <h4 id="update"></h4>
+            </div>
         </div>
+
         <img id="weatherPicture" src="#" alt="weatherPicture">
     </div>
 
@@ -97,6 +111,7 @@
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
     <script src="src/data/chartjs/Chart.js"></script>
+    <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
     <script src="src/js/scripts.js"></script>
 </body>
 

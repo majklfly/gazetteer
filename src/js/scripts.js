@@ -7,7 +7,13 @@ let countryName;
 let capitalCity;
 let map;
 let border;
-let markers;
+let polygon;
+let cityMarkers;
+let religionMarkers;
+let monumetsMarkers;
+let naturalMarkers;
+let industrialMarkers;
+let architectureMarkers;
 let weatherBtn;
 let galleryBtn;
 let exchangeButton;
@@ -43,6 +49,8 @@ const getCapitalCity = () => {
             if (result.data) {
                 latitude = result.data.lat;
                 longitude = result.data.lon;
+                $("#sunrise").html(result.data.sunrise);
+                $("#sunset").html(result.data.sunset);
                 getWeatherData();
             }
         },
@@ -52,16 +60,99 @@ const getCapitalCity = () => {
     });
 };
 
+// creates and adds the markers which are in the polygon
+const getMarkers = (data, icon, cluster) => {
+    data.map((item) => {
+        let lat;
+        let lon;
+        if (polygon) {
+            const p1 = polygon.geometry;
+            const p2 = {
+                type: "Feature",
+                properties: {},
+                geometry: {
+                    type: "Point",
+                    coordinates: [
+                        item.geometry.coordinates[0],
+                        item.geometry.coordinates[1],
+                    ],
+                },
+            };
+            if (turf.inside(p2, p1)) {
+                lat = item.geometry.coordinates[1];
+                lon = item.geometry.coordinates[0];
+            }
+        }
+
+        if (lat) {
+            const popup = L.popup()
+                .setLatLng([lat, lon])
+                .setContent(
+                    "<div class='cityPopup'><h3>" +
+                    item.properties.name +
+                    "</h3><a href=https://www.wikidata.org/wiki/" +
+                    item.properties.wikidata +
+                    ">Get more info...</a></div>"
+                );
+            const Icon = L.icon({
+                iconUrl: "src/img/" + icon,
+                iconSize: [25, 25], // size of the icon
+                iconAnchor: [17, 32], // point of the icon which will correspond to marker's location
+                popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+            });
+
+            const marker = L.marker([lat, lon], {
+                icon: Icon,
+            }).bindPopup(popup);
+
+            cluster.addLayer(marker);
+        }
+    });
+};
+
 //fetch and renders markups of interesting places on the map
+const retrieveAllRelevantPlacesData = (data) => {
+    data.map((item, index) => {
+        religionMarkers = L.markerClusterGroup();
+        monumetsMarkers = L.markerClusterGroup();
+        naturalMarkers = L.markerClusterGroup();
+        architectureMarkers = L.markerClusterGroup();
+
+        $.ajax({
+            url: "src/php/allRelevantPlacesData.php",
+            type: "GET",
+            dataType: "json",
+            data: {
+                latitude: item.fields.coordinates[0],
+                longitude: item.fields.coordinates[1],
+            },
+            success: function(result) {
+                if (result.religion) {
+                    getMarkers(result.religion, "church.png", religionMarkers);
+                }
+                if (result.palaces) {
+                    getMarkers(result.palaces, "palace.png", monumetsMarkers);
+                }
+                if (result.natural) {
+                    getMarkers(result.natural, "cave.png", naturalMarkers);
+                }
+                if (result.architecture) {
+                    getMarkers(result.architecture, "bridge.png", architectureMarkers);
+                }
+                map.addLayer(religionMarkers);
+                map.addLayer(monumetsMarkers);
+                map.addLayer(naturalMarkers);
+                map.addLayer(architectureMarkers);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+            },
+        });
+    });
+};
 
 const getOtherPlaces = () => {
     const countryNameFixed = countryName.replace(" ", "+");
-    var markers = L.markerClusterGroup({
-        iconCreateFunction: function(cluster) {
-            return L.divIcon({ html: "<b>" + cluster.getChildCount() + "</b>" });
-        },
-    });
-    markers.clearLayers();
     $.ajax({
         url: "src/php/otherPlaces.php",
         type: "GET",
@@ -70,7 +161,8 @@ const getOtherPlaces = () => {
             countryName: countryNameFixed,
         },
         success: function(result) {
-            markers = L.markerClusterGroup();
+            retrieveAllRelevantPlacesData(result.data);
+            cityMarkers = L.markerClusterGroup();
             result.data.map((item) => {
                 const lat = item.geometry.coordinates[1].toString();
                 const lon = item.geometry.coordinates[0].toString();
@@ -83,7 +175,6 @@ const getOtherPlaces = () => {
                         cityName: item.fields.name.replace(" ", "_"),
                     },
                     success: function(result) {
-                        console.log(result.data);
                         if (result.data) {
                             const popup = L.popup()
                                 .setLatLng([lat, lon])
@@ -105,7 +196,7 @@ const getOtherPlaces = () => {
                                 icon: Icon,
                             }).bindPopup(popup);
 
-                            markers.addLayer(marker);
+                            cityMarkers.addLayer(marker);
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -113,7 +204,7 @@ const getOtherPlaces = () => {
                     },
                 });
             });
-            map.addLayer(markers);
+            map.addLayer(cityMarkers);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, errorThrown);
@@ -132,7 +223,6 @@ const getWeatherData = () => {
         type: "GET",
         dataType: "json",
         success: function(result) {
-            console.log("weather data", result);
             $("#weatherTitle").html(result.current.condition.text);
             $("#wind").html(
                 "Wind: " +
@@ -170,7 +260,8 @@ const countryPolygon = () => {
             if (map.hasLayer(border)) {
                 map.removeLayer(border);
             }
-
+            getOtherPlaces();
+            polygon = result.data;
             border = L.geoJson(result.data, {
                 color: "#ff7800",
                 weight: 2,
@@ -268,7 +359,6 @@ $("#searchInput").on("change", function(e) {
                 map.removeLayer(marker);
             }
             getCapitalCity();
-            getOtherPlaces();
             getPhotos();
             countryPolygon();
         },
@@ -463,7 +553,6 @@ $.ajax({
         $("#countryTitle").html(result.data.country_name);
         renderMap();
         getCapitalCity();
-        getOtherPlaces();
         getWeatherData();
         getPhotos();
         countryPolygon();
