@@ -13,6 +13,7 @@ let religionMarkers;
 let monumetsMarkers;
 let naturalMarkers;
 let architectureMarkers;
+let reservationMarkers;
 let weatherBtn;
 let galleryBtn;
 let exchangeButton;
@@ -163,6 +164,18 @@ const retrieveAllRelevantPlacesData = (data) => {
                 });
             },
         });
+        reservationMarkers = L.markerClusterGroup({
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({
+                    html: "<img src='src/img/nature.png' width='30px' height='30px'>",
+                    className: "mycluster",
+                    iconSize: L.icon({
+                        iconUrl: "src/img/nature.png",
+                        iconSize: [20, 20],
+                    }),
+                });
+            },
+        });
 
         $.ajax({
             url: "src/php/allRelevantPlacesData.php",
@@ -185,10 +198,14 @@ const retrieveAllRelevantPlacesData = (data) => {
                 if (result.architecture) {
                     getMarkers(result.architecture, "bridge.png", architectureMarkers);
                 }
+                if (result.nature_reserves) {
+                    getMarkers(result.nature_reserves, "nature.png", reservationMarkers);
+                }
                 map.addLayer(religionMarkers);
                 map.addLayer(monumetsMarkers);
                 map.addLayer(naturalMarkers);
                 map.addLayer(architectureMarkers);
+                map.addLayer(reservationMarkers);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
@@ -342,6 +359,7 @@ const renderMap = () => {
     let bridgesSwitch = false;
     let cavesSwitch = false;
     let churchSwitch = false;
+    let reservationSwitch = false;
 
     L.tileLayer(
         "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", {
@@ -436,6 +454,19 @@ const renderMap = () => {
             } else {
                 map.removeLayer(religionMarkers);
                 churchSwitch = true;
+            }
+        }
+    ).addTo(map);
+
+    L.easyButton(
+        "<img src='src/img/nature.png' class='buttonIcon'/>",
+        function(btn, map) {
+            if (reservationSwitch === true) {
+                map.addLayer(reservationMarkers);
+                reservationSwitch = false;
+            } else {
+                map.removeLayer(reservationMarkers);
+                reservationSwitch = true;
             }
         }
     ).addTo(map);

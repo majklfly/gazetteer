@@ -29,7 +29,8 @@ visit: https://gazetteer-travel.herokuapp.com/
 - currencyconverterapi.com
 - wikidata.org
 - opentripmap.com
-- unsplash.com
+- unsplash.
+- icon8.com
 
 ## Support
 
