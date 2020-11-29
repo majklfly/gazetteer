@@ -513,9 +513,10 @@ const getCountryInfo = () => {
 
 //react to the search selection and updates the map based upon it
 $("#searchInput").on("change", function(e) {
+    $("#loadingContainer").css("display", "block");
     map.eachLayer((layer) => {
-        if (layer.dragging) {
-            layer.remove();
+        if (layer._gridClusters) {
+            map.removeLayer(layer);
         }
     });
     const currentValue = $("#searchInput").val();
