@@ -8,13 +8,19 @@ The Gazetteer offers an image gallery, currency exchange, weather information, a
 
 visit: https://gazetteer-travel.herokuapp.com/
 
+## Used Technology:
+
+- PHP 7
+- Javascript
+- HTML 5
+- CSS 3
+
 ## Implemented JS libraries:
 
 - Leaflet 1.7
 - chartJs
 - jQuery 3.5
 - Bootstrap 4.5
-- PHP 7
 
 ## Data sources:
 
@@ -26,4 +32,4 @@ visit: https://gazetteer-travel.herokuapp.com/
 
 ## Support
 
-If yoy have any issues, please let me know on majklfly@gmail.com
+If you have any issues, please let me know on majklfly@gmail.com
