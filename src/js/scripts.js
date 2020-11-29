@@ -739,13 +739,13 @@ $.ajax({
 
 //retrieve all possible currencies
 $.ajax({
-    url: "src/php/retrieveAllCurrencies.php",
+    url: "https://free.currconv.com/api/v7/currencies?apiKey=786adf7939bbf2bc8453",
     type: "GET",
     dataType: "json",
     data: {},
     success: function(result) {
         console.log(result);
-        for (const [key, value] of Object.entries(result.data.results)) {
+        for (const [key, value] of Object.entries(result.results)) {
             $(".currencyOptions").append(
                 "<option value=" + key + ">" + value.currencyName + "</option>"
             );
