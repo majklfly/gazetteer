@@ -115,10 +115,54 @@ const getMarkers = (data, icon, cluster) => {
 //fetch and renders markups of interesting places on the map
 const retrieveAllRelevantPlacesData = (data) => {
     data.map((item, index) => {
-        religionMarkers = L.markerClusterGroup();
-        monumetsMarkers = L.markerClusterGroup();
-        naturalMarkers = L.markerClusterGroup();
-        architectureMarkers = L.markerClusterGroup();
+        religionMarkers = L.markerClusterGroup({
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({
+                    html: "<img src='src/img/church.png' width='30px' height='30px'>",
+                    className: "mycluster",
+                    iconSize: L.icon({
+                        iconUrl: "src/img/church.png",
+                        iconSize: [20, 20],
+                    }),
+                });
+            },
+        });
+        monumetsMarkers = L.markerClusterGroup({
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({
+                    html: "<img src='src/img/palace.png' width='30px' height='30px'>",
+                    className: "mycluster",
+                    iconSize: L.icon({
+                        iconUrl: "src/img/palace.png",
+                        iconSize: [20, 20],
+                    }),
+                });
+            },
+        });
+        naturalMarkers = L.markerClusterGroup({
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({
+                    html: "<img src='src/img/cave.png' width='30px' height='30px'>",
+                    className: "mycluster",
+                    iconSize: L.icon({
+                        iconUrl: "src/img/cave.png",
+                        iconSize: [20, 20],
+                    }),
+                });
+            },
+        });
+        architectureMarkers = L.markerClusterGroup({
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({
+                    html: "<img src='src/img/bridge.png' width='30px' height='30px'>",
+                    className: "mycluster",
+                    iconSize: L.icon({
+                        iconUrl: "src/img/bridge.png",
+                        iconSize: [20, 20],
+                    }),
+                });
+            },
+        });
 
         $.ajax({
             url: "src/php/allRelevantPlacesData.php",
@@ -164,7 +208,18 @@ const getOtherPlaces = () => {
         },
         success: function(result) {
             retrieveAllRelevantPlacesData(result.data);
-            cityMarkers = L.markerClusterGroup();
+            cityMarkers = L.markerClusterGroup({
+                iconCreateFunction: function(cluster) {
+                    return L.divIcon({
+                        html: "<img src='src/img/marker.png' width='30px' height='30px'>",
+                        className: "mycluster",
+                        iconSize: L.icon({
+                            iconUrl: "src/img/marker.png",
+                            iconSize: [20, 20],
+                        }),
+                    });
+                },
+            });
             result.data.map((item) => {
                 const lat = item.geometry.coordinates[1].toString();
                 const lon = item.geometry.coordinates[0].toString();
