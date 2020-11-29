@@ -744,6 +744,7 @@ $.ajax({
     dataType: "json",
     data: {},
     success: function(result) {
+        console.log(result);
         for (const [key, value] of Object.entries(result.data)) {
             $(".currencyOptions").append(
                 "<option value=" + key + ">" + value.currencyName + "</option>"
