@@ -321,4 +321,7 @@ body {
     #weatherContainer {
         width: 70vw;
     }
+    #searchInput {
+        width: 70vw;
+    }
 }
