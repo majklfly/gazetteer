@@ -93,9 +93,9 @@ body {
 
 #weatherSunContainer {
     width: 30%;
-    height: 100%;
+    height: 150%;
     position: absolute;
-    top: -20%;
+    top: -50%;
     display: flex;
     justify-content: center;
     flex-direction: column;
