@@ -673,7 +673,7 @@ const reversedCurrencyConverter = (
             targetCurrency: baseCurrency,
         },
         success: function(result) {
-            const values = Object.values(result.data);
+            const values = Object.values(result.data.results);
             const rateValue = values[0].val;
             const updatedBaseValue = targetNumber * rateValue;
             $("#baseNumber").val(updatedBaseValue);
@@ -745,7 +745,7 @@ $.ajax({
     data: {},
     success: function(result) {
         console.log(result);
-        for (const [key, value] of Object.entries(result.data)) {
+        for (const [key, value] of Object.entries(result.data.results)) {
             $(".currencyOptions").append(
                 "<option value=" + key + ">" + value.currencyName + "</option>"
             );
