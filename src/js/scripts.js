@@ -48,7 +48,8 @@ const getCapitalCity = () => {
             countryCode: countryCode2,
         },
         success: function(result) {
-            if (result.data) {
+            console.log(result);
+            if (result.data && !result.data.error) {
                 latitude = result.data.data[0].lat;
                 longitude = result.data.data[0].lon;
                 $("#sunrise").html(result.data.data[0].sunrise);
