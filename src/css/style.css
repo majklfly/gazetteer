@@ -65,6 +65,8 @@ body {
 #weatherContainer {
     display: none;
     position: absolute;
+    flex-direction: row;
+    padding: 10%;
     width: 30%;
     right: 5%;
     top: 11%;
@@ -78,27 +80,54 @@ body {
 
 #weatherContainer>div {
     display: flex;
-    flex-direction: row;
-    position: relative;
+    flex-direction: column;
+}
+
+#weatherTitleContainer {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#weatherContainer h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1rem, 1.7vw, 2.3rem);
+    width: 50%;
+    text-align: center;
+}
+
+#weatherPicture {
+    position: absolute;
+    right: 5%;
+    top: 1%;
+    width: 40%;
+    height: auto;
+    opacity: 0.2;
 }
 
 #weatherInfoContainer {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    width: 60%;
-    margin-left: 30%;
-    height: 100%;
+    position: relative;
+    top: 2%;
+    width: 50%;
+    margin-left: 2%;
+    height: 70%;
 }
 
 #weatherSunContainer {
-    width: 30%;
-    height: 150%;
-    position: absolute;
-    top: -50%;
+    width: 28vw;
+    height: 30%;
+    position: relative;
+    bottom: 0%;
     display: flex;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     border: 2px solid lightgray;
     border-radius: 10px;
@@ -122,27 +151,10 @@ body {
     margin-top: 10%;
 }
 
-#weatherContainer h3 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(1rem, 1.7vw, 2.3rem);
-    width: 100%;
-    text-align: center;
-}
-
 #weatherContainer h4 {
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(0.5rem, 1vw, 2rem);
-    text-align: center;
-}
-
-#weatherPicture {
-    position: absolute;
-    right: 0%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30%;
-    height: auto;
-    opacity: 0.4;
+    text-align: start;
 }
 
 .leaflet-top {
@@ -329,5 +341,8 @@ body {
     }
     #searchInput {
         width: 70vw;
+    }
+    #weatherSunContainer {
+        width: 68vw;
     }
 }

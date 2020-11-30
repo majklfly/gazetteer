@@ -32,8 +32,12 @@
     <main role="main" id="mapid"></main>
 
     <div id="weatherContainer">
-        <h3 id="weatherTitle">Weather Container</h3>
         <div>
+            <div id="weatherInfoContainer">
+                <h4 id="wind"></h4>
+                <h4 id="temp"></h4>
+                <h4 id="update"></h4>
+            </div>
             <div id="weatherSunContainer">
                 <div>
                     <img src="src/img/sunrise.png" alt="sunrise">
@@ -45,14 +49,11 @@
                 </div>
 
             </div>
-            <div id="weatherInfoContainer">
-                <h4 id="wind"></h4>
-                <h4 id="temp"></h4>
-                <h4 id="update"></h4>
-            </div>
         </div>
-
-        <img id="weatherPicture" src="#" alt="weatherPicture">
+        <div id="weatherTitleContainer">
+            <h3 id="weatherTitle"></h3>
+            <img id="weatherPicture" src="#" alt="weatherPicture">
+        </div>
     </div>
 
     <div class="modal fade modal-fullscreen force-fullscreen" id="galleryModal" tabindex="-1" role="dialog" aria-hidden="true">

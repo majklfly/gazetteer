@@ -319,9 +319,9 @@ const renderMap = () => {
             title: "weather",
             onClick: function(btn, map) {
                 const attrValue = $("#weatherContainer").css("display");
-                attrValue === "block" ?
+                attrValue === "flex" ?
                     $("#weatherContainer").css("display", "none") :
-                    $("#weatherContainer").css("display", "block");
+                    $("#weatherContainer").css("display", "flex");
             },
         }, ],
     });
