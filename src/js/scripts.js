@@ -150,6 +150,8 @@ const retrieveAllRelevantPlacesData = (data) => {
                 map.addLayer(naturalMarkers);
                 map.addLayer(architectureMarkers);
                 map.addLayer(reservationMarkers);
+                $("#loadingContainer").css("display", "none");
+                $("#searchLoaderContainer").css("display", "none");
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
@@ -287,8 +289,6 @@ const countryPolygon = () => {
             }).addTo(map);
 
             map.fitBounds(border.getBounds());
-            $("#loadingContainer").css("display", "none");
-            $("#searchLoaderContainer").css("display", "none");
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, errorThrown);
