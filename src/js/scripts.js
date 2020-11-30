@@ -690,7 +690,7 @@ $.ajax({
     data: {},
     success: function(result) {
         console.log(result);
-        for (const [key, value] of Object.entries(result.results)) {
+        for (const [key, value] of Object.entries(result.data.results)) {
             $(".currencyOptions").append(
                 "<option value=" + key + ">" + value.currencyName + "</option>"
             );
