@@ -2,7 +2,7 @@
 
 $executionStartTime = microtime(true) / 1000;
 
-$url = "https://api.ipgeolocation.io/ipgeo?apiKey=" . $_REQUEST['key'];
+$url = "https://api.ipgeolocation.io/ipgeo?apiKey=1916b969238f4383b66a16126e6dfb2e&ip=" .  $_REQUEST['ip']; 
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

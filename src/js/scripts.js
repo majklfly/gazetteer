@@ -659,23 +659,42 @@ $("#targetCurrency").on("change", function() {
 
 // gets user's IP address and retrieves initial data back + calls all need function
 $.ajax({
-    url: "https://api.ipgeolocation.io/ipgeo?apiKey=1916b969238f4383b66a16126e6dfb2e",
+    url: "https://api.ipify.org/?format=json",
     type: "GET",
     dataType: "json",
     success: function(result) {
-        latitude = result.latitude;
-        longitude = result.longitude;
-        countryCode3 = result.country_code3;
-        countryCode2 = result.country_code2;
-        countryName = result.country_name;
-        capitalCity = result.country_capital;
-        renderMap();
-        getCapitalCity();
-        getWeatherData();
-        getPhotos();
-        countryPolygon();
-        getCountryInfo();
-        currencyConverter(baseCurrency, baseNumber, targetCurrency, targetNumber);
+        $.ajax({
+            url: "src/php/currentLocation.php",
+            type: "GET",
+            dataType: "json",
+            data: {
+                ip: result.ip,
+            },
+            success: function(result) {
+                latitude = result.data.latitude;
+                longitude = result.data.longitude;
+                countryCode3 = result.data.country_code3;
+                countryCode2 = result.data.country_code2;
+                countryName = result.data.country_name;
+                capitalCity = result.data.country_capital;
+                renderMap();
+                getCapitalCity();
+                getWeatherData();
+                getPhotos();
+                countryPolygon();
+                getCountryInfo();
+                currencyConverter(
+                    baseCurrency,
+                    baseNumber,
+                    targetCurrency,
+                    targetNumber
+                );
+            },
+
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            },
+        });
     },
     error: function(jqXHR, textStatus, errorThrown) {
         console.log(errorThrown);
@@ -689,7 +708,6 @@ $.ajax({
     dataType: "json",
     data: {},
     success: function(result) {
-        console.log(result);
         for (const [key, value] of Object.entries(result.data.results)) {
             $(".currencyOptions").append(
                 "<option value=" + key + ">" + value.currencyName + "</option>"
