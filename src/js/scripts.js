@@ -49,15 +49,25 @@ const getCapitalCity = () => {
         },
         success: function(result) {
             if (result.data) {
-                latitude = result.data.lat;
-                longitude = result.data.lon;
-                $("#sunrise").html(result.data.sunrise);
-                $("#sunset").html(result.data.sunset);
+                latitude = result.data.data[0].lat;
+                longitude = result.data.data[0].lon;
+                $("#sunrise").html(result.data.data[0].sunrise);
+                $("#sunset").html(result.data.data[0].sunset);
                 getWeatherData();
+            } else {
+                console.log("else");
+                latitude = 51.5074;
+                longitude = 0.1278;
+                countryCode3 = "GBR";
+                countryCode2 = "GB";
+                countryName = "United Kingdom";
+                capitalCity = "London";
+                getWeatherData();
+                $("#errorModal").modal("show");
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
+            console.log(jqXHR);
         },
     });
 };
@@ -351,70 +361,180 @@ const renderMap = () => {
         }
     ).addTo(map);
 
-    L.easyButton(
-        "<img src='src/img/palace.png' class='buttonIcon'/>",
-        function(btn, map) {
-            if (palaceSwitch === true) {
-                map.addLayer(monumetsMarkers);
-                palaceSwitch = false;
-            } else {
-                map.removeLayer(monumetsMarkers);
-                palaceSwitch = true;
-            }
-        }
-    ).addTo(map);
+    L.easyButton({
+        states: [{
+                stateName: "hide", // name the state
+                icon: "<img src='src/img/palace.png' class='buttonIcon'/>", // and define its properties
+                title: "hide the palaces", // like its title
+                onClick: function(btn, map) {
+                    // and its callback
+                    if (palaceSwitch === true) {
+                        map.addLayer(monumetsMarkers);
+                        palaceSwitch = false;
+                    } else {
+                        map.removeLayer(monumetsMarkers);
+                        palaceSwitch = true;
+                    }
+                    btn.state("show"); // change state on click!
+                },
+            },
+            {
+                stateName: "show",
+                icon: "<img src='src/img/palaceGrey.png' class='buttonIcon'/>",
+                title: "show the palaces",
+                onClick: function(btn, map) {
+                    if (palaceSwitch === true) {
+                        map.addLayer(monumetsMarkers);
+                        palaceSwitch = false;
+                    } else {
+                        map.removeLayer(monumetsMarkers);
+                        palaceSwitch = true;
+                    }
+                    btn.state("hide");
+                },
+            },
+        ],
+    }).addTo(map);
 
-    L.easyButton(
-        "<img src='src/img/bridge.png' class='buttonIcon'/>",
-        function(btn, map) {
-            if (bridgesSwitch === true) {
-                map.addLayer(architectureMarkers);
-                bridgesSwitch = false;
-            } else {
-                map.removeLayer(architectureMarkers);
-                bridgesSwitch = true;
-            }
-        }
-    ).addTo(map);
+    L.easyButton({
+        states: [{
+                stateName: "hide", // name the state
+                icon: "<img src='src/img/bridge.png' class='buttonIcon'/>", // and define its properties
+                title: "hide the bridges", // like its title
+                onClick: function(btn, map) {
+                    // and its callback
+                    if (bridgesSwitch === true) {
+                        map.addLayer(architectureMarkers);
+                        bridgesSwitch = false;
+                    } else {
+                        map.removeLayer(architectureMarkers);
+                        bridgesSwitch = true;
+                    }
+                    btn.state("show"); // change state on click!
+                },
+            },
+            {
+                stateName: "show",
+                icon: "<img src='src/img/bridgeGrey.png' class='buttonIcon'/>",
+                title: "show the bridges",
+                onClick: function(btn, map) {
+                    if (bridgesSwitch === true) {
+                        map.addLayer(architectureMarkers);
+                        bridgesSwitch = false;
+                    } else {
+                        map.removeLayer(architectureMarkers);
+                        bridgesSwitch = true;
+                    }
+                    btn.state("hide");
+                },
+            },
+        ],
+    }).addTo(map);
 
-    L.easyButton(
-        "<img src='src/img/cave.png' class='buttonIcon'/>",
-        function(btn, map) {
-            if (cavesSwitch === true) {
-                map.addLayer(naturalMarkers);
-                cavesSwitch = false;
-            } else {
-                map.removeLayer(naturalMarkers);
-                cavesSwitch = true;
-            }
-        }
-    ).addTo(map);
+    L.easyButton({
+        states: [{
+                stateName: "hide", // name the state
+                icon: "<img src='src/img/cave.png' class='buttonIcon'/>", // and define its properties
+                title: "hide the caves", // like its title
+                onClick: function(btn, map) {
+                    // and its callback
+                    if (cavesSwitch === true) {
+                        map.addLayer(naturalMarkers);
+                        cavesSwitch = false;
+                    } else {
+                        map.removeLayer(naturalMarkers);
+                        cavesSwitch = true;
+                    }
+                    btn.state("show"); // change state on click!
+                },
+            },
+            {
+                stateName: "show",
+                icon: "<img src='src/img/caveGrey.png' class='buttonIcon'/>",
+                title: "show the caves",
+                onClick: function(btn, map) {
+                    if (cavesSwitch === true) {
+                        map.addLayer(naturalMarkers);
+                        cavesSwitch = false;
+                    } else {
+                        map.removeLayer(naturalMarkers);
+                        cavesSwitch = true;
+                    }
+                    btn.state("hide");
+                },
+            },
+        ],
+    }).addTo(map);
 
-    L.easyButton(
-        "<img src='src/img/church.png' class='buttonIcon'/>",
-        function(btn, map) {
-            if (churchSwitch === true) {
-                map.addLayer(religionMarkers);
-                churchSwitch = false;
-            } else {
-                map.removeLayer(religionMarkers);
-                churchSwitch = true;
-            }
-        }
-    ).addTo(map);
+    L.easyButton({
+        states: [{
+                stateName: "hide", // name the state
+                icon: "<img src='src/img/church.png' class='buttonIcon'/>", // and define its properties
+                title: "hide the churches", // like its title
+                onClick: function(btn, map) {
+                    // and its callback
+                    if (churchSwitch === true) {
+                        map.addLayer(religionMarkers);
+                        churchSwitch = false;
+                    } else {
+                        map.removeLayer(religionMarkers);
+                        churchSwitch = true;
+                    }
+                    btn.state("show"); // change state on click!
+                },
+            },
+            {
+                stateName: "show",
+                icon: "<img src='src/img/churchGrey.png' class='buttonIcon'/>",
+                title: "show the churches",
+                onClick: function(btn, map) {
+                    if (churchSwitch === true) {
+                        map.addLayer(religionMarkers);
+                        churchSwitch = false;
+                    } else {
+                        map.removeLayer(religionMarkers);
+                        churchSwitch = true;
+                    }
+                    btn.state("hide");
+                },
+            },
+        ],
+    }).addTo(map);
 
-    L.easyButton(
-        "<img src='src/img/nature.png' class='buttonIcon'/>",
-        function(btn, map) {
-            if (reservationSwitch === true) {
-                map.addLayer(reservationMarkers);
-                reservationSwitch = false;
-            } else {
-                map.removeLayer(reservationMarkers);
-                reservationSwitch = true;
-            }
-        }
-    ).addTo(map);
+    L.easyButton({
+        states: [{
+                stateName: "hide", // name the state
+                icon: "<img src='src/img/nature.png' class='buttonIcon'/>", // and define its properties
+                title: "hide the parks", // like its title
+                onClick: function(btn, map) {
+                    // and its callback
+                    if (reservationSwitch === true) {
+                        map.addLayer(reservationMarkers);
+                        reservationSwitch = false;
+                    } else {
+                        map.removeLayer(reservationMarkers);
+                        reservationSwitch = true;
+                    }
+                    btn.state("show"); // change state on click!
+                },
+            },
+            {
+                stateName: "show",
+                icon: "<img src='src/img/natureGrey.png' class='buttonIcon'/>",
+                title: "show the parks",
+                onClick: function(btn, map) {
+                    if (reservationSwitch === true) {
+                        map.addLayer(reservationMarkers);
+                        reservationSwitch = false;
+                    } else {
+                        map.removeLayer(reservationMarkers);
+                        reservationSwitch = true;
+                    }
+                    btn.state("hide");
+                },
+            },
+        ],
+    }).addTo(map);
 
     markers = L.markerClusterGroup();
 };
@@ -455,6 +575,11 @@ const getCountryInfo = () => {
         },
     });
 };
+
+// button on error message to reload page
+$("#homeButton").on("click", function() {
+    window.location.reload();
+});
 
 //react to the search selection and updates the map based upon it
 $("#searchInput").on("change", function(e) {

@@ -59,7 +59,7 @@ body {
 }
 
 .modal-backdrop {
-    background-color: transparent;
+    background-color: black;
 }
 
 #weatherContainer {
@@ -311,6 +311,13 @@ body {
 
 .input-group {
     padding-top: 5%;
+}
+
+#errorContent {
+    background-color: white;
+    padding: 5%;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
 }
 
  ::-webkit-scrollbar {
