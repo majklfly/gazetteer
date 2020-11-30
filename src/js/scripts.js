@@ -684,7 +684,7 @@ $.ajax({
 
 //retrieve all possible currencies
 $.ajax({
-    url: "https://free.currconv.com/api/v7/currencies?apiKey=786adf7939bbf2bc8453",
+    url: "src/php/retrieveAllCurrencies.php",
     type: "GET",
     dataType: "json",
     data: {},
