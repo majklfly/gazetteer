@@ -46,7 +46,6 @@ const getCapitalCity = () => {
         data: {
             capitalCity: capitalNoSpace,
             countryCode: countryCode2,
-            apiKey: "1856257054eb4dd4a53ffbdc7327374d",
         },
         success: function(result) {
             if (result.data) {
@@ -116,66 +115,11 @@ const getMarkers = (data, icon, cluster) => {
 //fetch and renders markups of interesting places on the map
 const retrieveAllRelevantPlacesData = (data) => {
     data.map((item, index) => {
-        religionMarkers = L.markerClusterGroup({
-            iconCreateFunction: function(cluster) {
-                return L.divIcon({
-                    html: "<img src='src/img/church.png' width='30px' height='30px'>",
-                    className: "mycluster",
-                    iconSize: L.icon({
-                        iconUrl: "src/img/church.png",
-                        iconSize: [20, 20],
-                    }),
-                });
-            },
-        });
-        monumetsMarkers = L.markerClusterGroup({
-            iconCreateFunction: function(cluster) {
-                return L.divIcon({
-                    html: "<img src='src/img/palace.png' width='30px' height='30px'>",
-                    className: "mycluster",
-                    iconSize: L.icon({
-                        iconUrl: "src/img/palace.png",
-                        iconSize: [20, 20],
-                    }),
-                });
-            },
-        });
-        naturalMarkers = L.markerClusterGroup({
-            iconCreateFunction: function(cluster) {
-                return L.divIcon({
-                    html: "<img src='src/img/cave.png' width='30px' height='30px'>",
-                    className: "mycluster",
-                    iconSize: L.icon({
-                        iconUrl: "src/img/cave.png",
-                        iconSize: [20, 20],
-                    }),
-                });
-            },
-        });
-        architectureMarkers = L.markerClusterGroup({
-            iconCreateFunction: function(cluster) {
-                return L.divIcon({
-                    html: "<img src='src/img/bridge.png' width='30px' height='30px'>",
-                    className: "mycluster",
-                    iconSize: L.icon({
-                        iconUrl: "src/img/bridge.png",
-                        iconSize: [20, 20],
-                    }),
-                });
-            },
-        });
-        reservationMarkers = L.markerClusterGroup({
-            iconCreateFunction: function(cluster) {
-                return L.divIcon({
-                    html: "<img src='src/img/nature.png' width='30px' height='30px'>",
-                    className: "mycluster",
-                    iconSize: L.icon({
-                        iconUrl: "src/img/nature.png",
-                        iconSize: [20, 20],
-                    }),
-                });
-            },
-        });
+        religionMarkers = L.markerClusterGroup();
+        monumetsMarkers = L.markerClusterGroup();
+        naturalMarkers = L.markerClusterGroup();
+        architectureMarkers = L.markerClusterGroup();
+        reservationMarkers = L.markerClusterGroup();
 
         $.ajax({
             url: "src/php/allRelevantPlacesData.php",
@@ -342,8 +286,9 @@ const countryPolygon = () => {
                 opacity: 0.65,
             }).addTo(map);
 
-            map.flyToBounds(border.getBounds());
+            map.fitBounds(border.getBounds());
             $("#loadingContainer").css("display", "none");
+            $("#searchLoaderContainer").css("display", "none");
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, errorThrown);
@@ -513,7 +458,7 @@ const getCountryInfo = () => {
 
 //react to the search selection and updates the map based upon it
 $("#searchInput").on("change", function(e) {
-    $("#loadingContainer").css("display", "block");
+    $("#searchLoaderContainer").css("display", "flex");
     map.eachLayer((layer) => {
         if (layer._gridClusters) {
             map.removeLayer(layer);

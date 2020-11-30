@@ -2,7 +2,7 @@
 
 $executionStartTime = microtime(true) / 1000;
 
-$url = "https://api.weatherbit.io/v2.0/current?city=" . $_REQUEST['capitalCity'] . "&country=" . $_REQUEST['countryCode'] . "&key=" . $_REQUEST['apiKey'];
+$url = "https://api.weatherbit.io/v2.0/current?city=" . $_REQUEST['capitalCity'] . "&country=" . $_REQUEST['countryCode'] . "&key=1856257054eb4dd4a53ffbdc7327374d";
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
