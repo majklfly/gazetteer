@@ -243,6 +243,16 @@ const getOtherPlaces = () => {
     });
 };
 
+// formated date for the weather container
+const formatDateForWeather = (date) => {
+    console.log(date.split("-"));
+    const year = date.split("-")[0];
+    const month = date.split("-")[1];
+    const day = date.split("-")[2].split(" ")[0];
+    const time = date.split(" ")[1];
+    return day + "/" + month + "/" + year + " - " + time;
+};
+
 //fetch and render weather data
 const getWeatherData = () => {
     $.ajax({
@@ -269,7 +279,9 @@ const getWeatherData = () => {
                 result.current.temp_f +
                 "°F"
             );
-            $("#update").html("Last Update: " + result.current.last_updated);
+            $("#update").html(
+                "Updated: " + formatDateForWeather(result.current.last_updated)
+            );
             $("#weatherPicture").attr("src", result.current.condition.icon);
         },
         error: function(jqXHR, textStatus, errorThrown) {
