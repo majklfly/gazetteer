@@ -245,7 +245,6 @@ const getOtherPlaces = () => {
 
 // formated date for the weather container
 const formatDateForWeather = (date) => {
-    console.log(date.split("-"));
     const year = date.split("-")[0];
     const month = date.split("-")[1];
     const day = date.split("-")[2].split(" ")[0];
@@ -582,6 +581,38 @@ const getCountryInfo = () => {
 
             const img = document.getElementById("flag");
             img.src = result.data.flag;
+
+            //adds selection of countries to the input
+            $.ajax({
+                url: "src/php/countriesSelection.php",
+                type: "GET",
+                dataType: "json",
+                data: {},
+                success: function(result) {
+                    result.data.map((item) => {
+                        if (item.alpha2Code === countryCode2) {
+                            $("#searchInput").append(
+                                "<option selected='selected' value=" +
+                                item.alpha2Code +
+                                " >" +
+                                item.name +
+                                "</option>"
+                            );
+                        } else {
+                            $("#searchInput").append(
+                                "<option value=" +
+                                item.alpha2Code +
+                                " >" +
+                                item.name +
+                                "</option>"
+                            );
+                        }
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                },
+            });
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
@@ -851,24 +882,6 @@ $.ajax({
                 "<option value=" + key + ">" + value.currencyName + "</option>"
             );
         }
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-        console.log(errorThrown);
-    },
-});
-
-//adds selection of countries to the input
-$.ajax({
-    url: "src/php/countriesSelection.php",
-    type: "GET",
-    dataType: "json",
-    data: {},
-    success: function(result) {
-        result.data.map((item) => {
-            $("#searchInput").append(
-                "<option value=" + item.alpha2Code + " >" + item.name + "</option>"
-            );
-        });
     },
     error: function(jqXHR, textStatus, errorThrown) {
         console.log(errorThrown);
